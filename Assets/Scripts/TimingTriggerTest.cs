@@ -32,14 +32,17 @@ public class TimingTriggerTest : MonoBehaviour
             if (counter <= 30 /*&& player says the right word*/)
             {
                 //dog stumbles before reaching obstacle
+                Debug.Log("stumble before");
             }
             else if (counter <= 90 /*&& player says the right word*/)
             {
                 //dog successfully gets through the obstacle
+                Debug.Log("successful dog!");
             }
             else if (counter <= 120)
             {
                 //dog stumbles after reaching obstacle
+                Debug.Log("stumble after");
             }
         }
     }
