@@ -84,7 +84,7 @@ public class CharacterContoller : MonoBehaviour
             if (turnAction.ReadValue<float>() == 1)
             {
                 //turn left
-                sphere.transform.position = (this.transform.position + (this.transform.right * theSpEEdOftheDog / 3));
+                sphere.transform.position = (this.transform.position + (this.transform.right * theSpEEdOftheDog));
                 for (int i = 0; i < 45; i++)
                 {
                     yield return new WaitForFixedUpdate();
@@ -94,7 +94,7 @@ public class CharacterContoller : MonoBehaviour
             else if (turnAction.ReadValue<float>() == -1)
             {
                 //turn right
-                sphere.transform.position = (this.transform.position -(this.transform.right * theSpEEdOftheDog / 3));
+                sphere.transform.position = (this.transform.position -(this.transform.right * theSpEEdOftheDog));
                 for (int i = 0; i < 45; i++)
                 {
                     yield return new WaitForFixedUpdate();
