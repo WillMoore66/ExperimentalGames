@@ -8,7 +8,7 @@ Material:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: Ads
-  m_Shader: {fileID: -6465566751694194690, guid: 1c8c616a913202b44a9f1093351228b8,
+  m_Shader: {fileID: -6465566751694194690, guid: e549db708f4c6cf4282a79f53bb5d727,
     type: 3}
   m_Parent: {fileID: 0}
   m_ModifiedSerializedProperties: 0
@@ -117,7 +117,7 @@ Material:
     - _Blend: 0
     - _BlendMode: 0
     - _BlendModePreserveSpecular: 1
-    - _Brightness: 2
+    - _Brightness: 1.5
     - _BumpScale: 1
     - _ClearCoatMask: 0
     - _ClearCoatSmoothness: 0
@@ -143,13 +143,13 @@ Material:
     - _GlossMapScale: 0
     - _Glossiness: 0
     - _GlossyReflections: 0
-    - _LED_Height: 0.3
-    - _LED_Width: 0.3
+    - _LED_Height: 0.8
+    - _LED_Width: 0.9
     - _Metallic: 0
     - _OcclusionStrength: 1
     - _OpaqueCullMode: 2
     - _Parallax: 0.005
-    - _Pixel_Density: 300
+    - _Pixel_Density: 500
     - _QueueControl: 0
     - _QueueOffset: 0
     - _RayTracing: 0

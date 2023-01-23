@@ -18,8 +18,7 @@ public class CharacterContoller : MonoBehaviour
     InputAction jumpAction;
     InputAction turnAction;
 
-    bool jumping;
-    bool turning;
+    bool busy;
 
     private void Awake()
     {
@@ -44,19 +43,22 @@ public class CharacterContoller : MonoBehaviour
 
     void Update()
     {
-        if (forwardAction.ReadValue<float>() != 0)
+        if (!busy)
         {
-            GoForward();
-        }
+            if (forwardAction.ReadValue<float>() != 0)
+            {
+                GoForward();
+            }
 
-        if (jumpAction.ReadValue<float>() != 0)
-        {
-            Jump();
-        }
+            if (jumpAction.ReadValue<float>() != 0)
+            {
+                Jump();
+            }
 
-        if (turnAction.ReadValue<float>() != 0)
-        {
-            Turn();
+            if (turnAction.ReadValue<float>() != 0)
+            {
+                Turn();
+            }
         }
     }
 
@@ -78,51 +80,45 @@ public class CharacterContoller : MonoBehaviour
 
     IEnumerator TurnRoutine()
     {
-        if (!turning)
+        busy = true;
+        if (turnAction.ReadValue<float>() == 1)
         {
-            turning = true;
-            if (turnAction.ReadValue<float>() == 1)
+            //turn left
+            sphere.transform.position = (this.transform.position + (this.transform.right * theSpEEdOftheDog));
+            for (int i = 0; i < 45; i++)
             {
-                //turn left
-                sphere.transform.position = (this.transform.position + (this.transform.right * theSpEEdOftheDog));
-                for (int i = 0; i < 45; i++)
-                {
-                    yield return new WaitForFixedUpdate();
-                    this.transform.RotateAround(sphere.transform.position, sphere.transform.up, 2);
-                }
+                yield return new WaitForFixedUpdate();
+                this.transform.RotateAround(sphere.transform.position, sphere.transform.up, 2);
             }
-            else if (turnAction.ReadValue<float>() == -1)
-            {
-                //turn right
-                sphere.transform.position = (this.transform.position -(this.transform.right * theSpEEdOftheDog));
-                for (int i = 0; i < 45; i++)
-                {
-                    yield return new WaitForFixedUpdate();
-                    this.transform.RotateAround(sphere.transform.position, sphere.transform.up, -2);
-                }
-            }
-            turning = false;
         }
+        else if (turnAction.ReadValue<float>() == -1)
+        {
+            //turn right
+            sphere.transform.position = (this.transform.position + (-this.transform.right * theSpEEdOftheDog));
+            for (int i = 0; i < 45; i++)
+            {
+                yield return new WaitForFixedUpdate();
+                this.transform.RotateAround(sphere.transform.position, sphere.transform.up, -2);
+            }
+        }
+        busy = false;
     }
 
     void Jump()
-    {
-        StartCoroutine("JumpUp");
-    }
+{
+    StartCoroutine("JumpUp");
+}
 
-    IEnumerator JumpUp()
+private IEnumerator JumpUp()
+{
+    busy = true;
+    sphere.transform.position = (new Vector3(this.transform.position.x, this.transform.position.y, this.transform.position.z) + this.transform.forward * theSpEEdOftheDog / 3);
+    for (int i = 0; i < 90; i++)
     {
-        if (!jumping)
-        {
-            jumping = true;
-            sphere.transform.position = (new Vector3(this.transform.position.x, this.transform.position.y, this.transform.position.z) + this.transform.forward * theSpEEdOftheDog / 3);
-            for (int i = 0; i < 90; i++)
-            {
-                yield return new WaitForFixedUpdate();
-                this.transform.RotateAround(sphere.transform.position, sphere.transform.right, 2);
-                this.transform.Rotate(-this.transform.right * 2);
-            }
-            jumping = false;
-        }
+        yield return new WaitForFixedUpdate();
+        this.transform.RotateAround(sphere.transform.position, sphere.transform.right, 2);
+        this.transform.Rotate(-this.transform.right * 2);
+        busy = false;
     }
+}
 }
