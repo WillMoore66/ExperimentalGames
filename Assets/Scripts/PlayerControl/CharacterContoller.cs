@@ -49,13 +49,11 @@ public class CharacterContoller : MonoBehaviour
             {
                 GoForward();
             }
-
-            if (jumpAction.ReadValue<float>() != 0)
+            else if (jumpAction.ReadValue<float>() != 0)
             {
                 Jump();
             }
-
-            if (turnAction.ReadValue<float>() != 0)
+            else if (turnAction.ReadValue<float>() != 0)
             {
                 Turn();
             }
@@ -78,13 +76,18 @@ public class CharacterContoller : MonoBehaviour
         StartCoroutine("TurnRoutine");
     }
 
+    void Jump()
+    {
+        StartCoroutine("JumpUp");
+    }
+
     IEnumerator TurnRoutine()
     {
         busy = true;
         if (turnAction.ReadValue<float>() == 1)
         {
             //turn left
-            sphere.transform.position = (this.transform.position + (this.transform.right * theSpEEdOftheDog));
+            sphere.transform.position = (this.transform.position + (this.transform.right * (theSpEEdOftheDog/2)));
             for (int i = 0; i < 45; i++)
             {
                 yield return new WaitForFixedUpdate();
@@ -94,7 +97,7 @@ public class CharacterContoller : MonoBehaviour
         else if (turnAction.ReadValue<float>() == -1)
         {
             //turn right
-            sphere.transform.position = (this.transform.position + (-this.transform.right * theSpEEdOftheDog));
+            sphere.transform.position = (this.transform.position + (-this.transform.right * (theSpEEdOftheDog/2)));
             for (int i = 0; i < 45; i++)
             {
                 yield return new WaitForFixedUpdate();
@@ -104,21 +107,18 @@ public class CharacterContoller : MonoBehaviour
         busy = false;
     }
 
-    void Jump()
-{
-    StartCoroutine("JumpUp");
-}
-
-private IEnumerator JumpUp()
-{
-    busy = true;
-    sphere.transform.position = (new Vector3(this.transform.position.x, this.transform.position.y, this.transform.position.z) + this.transform.forward * theSpEEdOftheDog / 3);
-    for (int i = 0; i < 90; i++)
+    //Jumping needs to be fixed because the dog will jump under the ground or rotate strangely when facing the wrong direction
+    private IEnumerator JumpUp()
     {
-        yield return new WaitForFixedUpdate();
-        this.transform.RotateAround(sphere.transform.position, sphere.transform.right, 2);
-        this.transform.Rotate(-this.transform.right * 2);
+        busy = true;
+        Debug.Log("hhy");
+        sphere.transform.position = (new Vector3(this.transform.position.x, this.transform.position.y, this.transform.position.z) + this.transform.forward * theSpEEdOftheDog / 3);
+        for (int i = 0; i < 90; i++)
+        {
+            yield return new WaitForFixedUpdate();
+            this.transform.RotateAround(sphere.transform.position, sphere.transform.right, 2);
+            this.transform.Rotate(-this.transform.right * 2);
+        }
         busy = false;
     }
-}
 }
