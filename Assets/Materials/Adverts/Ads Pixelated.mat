@@ -135,10 +135,11 @@ Material:
     - _DstBlend: 0
     - _DstBlendAlpha: 0
     - _Emission_Exposure: 0
-    - _Emission_Intensity: 30
+    - _Emission_Intensity: 10
     - _EnableBlendModePreserveSpecularLighting: 1
     - _EnableFogOnTransparent: 1
     - _EnvironmentReflections: 1
+    - _Exposure_Weight: 0.5
     - _Float: 250
     - _GlossMapScale: 0
     - _Glossiness: 0
