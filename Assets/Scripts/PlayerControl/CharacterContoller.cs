@@ -6,6 +6,8 @@ using System.Linq;
 using UnityEngine.InputSystem;
 using UnityEngine.Windows.Speech;
 
+
+
 public class CharacterContoller : MonoBehaviour
 {
     [SerializeField] GameObject sphere;
@@ -13,7 +15,11 @@ public class CharacterContoller : MonoBehaviour
     private KeywordRecognizer keywordRecognizer;
 
     PlayerInput playerInput;
-    [SerializeField] float theSpEEdOftheDog = 30;
+    [SerializeField] [Range(1.0f, 100.0f)] float theSpEEdOftheDog = 30;
+	[SerializeField] [Range(1.0f, 360.0f)] float turningDegrees = 45;
+	[SerializeField] [Range(1.0f, 360.0f)] float jumpingDegrees = 90;
+	[SerializeField] [Range(0.0f, 10.0f)] float turningSpeed = 2;
+	[SerializeField] [Range(0.0f, 10.0f)] float jumpingSpeed = 2;
     InputAction forwardAction;
     InputAction jumpAction;
     InputAction turnAction;
@@ -87,21 +93,21 @@ public class CharacterContoller : MonoBehaviour
         if (turnAction.ReadValue<float>() == 1)
         {
             //turn left
-            sphere.transform.position = (this.transform.position + (this.transform.right * (theSpEEdOftheDog/2)));
-            for (int i = 0; i < 45; i++)
+            sphere.transform.position = (this.transform.position + (this.transform.right * (theSpEEdOftheDog/turningSpeed)));
+            for (int i = 0; i < turningDegrees; i++)
             {
                 yield return new WaitForFixedUpdate();
-                this.transform.RotateAround(sphere.transform.position, sphere.transform.up, 2);
+                this.transform.RotateAround(sphere.transform.position, sphere.transform.up, turningSpeed);
             }
         }
         else if (turnAction.ReadValue<float>() == -1)
         {
             //turn right
-            sphere.transform.position = (this.transform.position + (-this.transform.right * (theSpEEdOftheDog/2)));
-            for (int i = 0; i < 45; i++)
+            sphere.transform.position = (this.transform.position + (-this.transform.right * (theSpEEdOftheDog/turningSpeed)));
+            for (int i = 0; i < turningDegrees; i++)
             {
                 yield return new WaitForFixedUpdate();
-                this.transform.RotateAround(sphere.transform.position, sphere.transform.up, -2);
+                this.transform.RotateAround(sphere.transform.position, sphere.transform.up, -turningSpeed);
             }
         }
         busy = false;
@@ -113,11 +119,11 @@ public class CharacterContoller : MonoBehaviour
         busy = true;
         Debug.Log("hhy");
         sphere.transform.position = (new Vector3(this.transform.position.x, this.transform.position.y, this.transform.position.z) + this.transform.forward * theSpEEdOftheDog / 3);
-        for (int i = 0; i < 90; i++)
+        for (int i = 0; i < jumpingDegrees; i++)
         {
             yield return new WaitForFixedUpdate();
-            this.transform.RotateAround(sphere.transform.position, sphere.transform.right, 2);
-            this.transform.Rotate(-this.transform.right * 2);
+            this.transform.RotateAround(sphere.transform.position, sphere.transform.right, jumpingSpeed);
+            this.transform.Rotate(-this.transform.right * jumpingSpeed);
         }
         busy = false;
     }
