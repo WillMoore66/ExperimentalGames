@@ -22,6 +22,7 @@ public class HandManager : MonoBehaviour
     {
         cam = Camera.main;
         followingMouse = true;
+        Cursor.visible = false;
     }
 
     // Update is called once per frame
