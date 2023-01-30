@@ -13,11 +13,11 @@ public class CharacterContoller : MonoBehaviour {
     private KeywordRecognizer keywordRecognizer;
 
     PlayerInput playerInput;
-    [SerializeField][Range(1.0f, 100.0f)] float theSpEEdOftheDog = 30;
+    [SerializeField][Range(1.0f, 100.0f)] public float theSpEEdOftheDog = 30;
     [SerializeField][Range(1.0f, 360.0f)] float turningDegrees = 45;
-    [SerializeField][Range(1.0f, 360.0f)] float jumpingDegrees = 90;
+    //[SerializeField][Range(1.0f, 360.0f)] float jumpingDegrees = 90;
     [SerializeField][Range(0.0f, 10.0f)] float turningSpeed = 2;
-    [SerializeField][Range(0.0f, 10.0f)] float jumpingSpeed = 2;
+    //[SerializeField][Range(0.0f, 10.0f)] float jumpingSpeed = 2;
     [SerializeField][Range(0.0f, 3.0f)] float jumpTime = 1;
     [SerializeField][Range(0.0f, 3.0f)] float jumpDistance = 1;
     [SerializeField][Range(0.0f, 10.0f)] float jumpHeight = 5;
@@ -25,6 +25,7 @@ public class CharacterContoller : MonoBehaviour {
     InputAction jumpAction;
     InputAction turnAction;
 
+    [SerializeField] bool constantForward;
     bool busy;
 
     private void Awake() {
@@ -47,9 +48,16 @@ public class CharacterContoller : MonoBehaviour {
         keywordRecognizer.Start();
     }
 
-    void Update() {
+    void FixedUpdate() {
+
         if (!busy) {
-            if (forwardAction.ReadValue<float>() != 0) {
+
+            if (constantForward)
+            {
+                GoForward();
+            }
+
+            if (forwardAction.ReadValue<float>() != 0 && !constantForward) {
                 GoForward();
             } else if (jumpAction.ReadValue<float>() != 0) {
                 Jump();
@@ -65,7 +73,7 @@ public class CharacterContoller : MonoBehaviour {
     }
 
     void GoForward() {
-        this.transform.position += this.transform.forward * theSpEEdOftheDog * forwardAction.ReadValue<float>() * Time.deltaTime;
+        this.transform.position += this.transform.forward * theSpEEdOftheDog * Time.deltaTime;
     }
 
     void Turn() {
