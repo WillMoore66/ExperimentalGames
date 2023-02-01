@@ -4,6 +4,8 @@ using Unity.VisualScripting;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEditor.SceneManagement;
+using UnityEngine.SceneManagement;
 
 public class HandManager : MonoBehaviour
 {
@@ -61,6 +63,7 @@ public class HandManager : MonoBehaviour
             //play dog happy animation
             Debug.Log("the dog is very happy!");
             dog.transform.Rotate(10, 5, 2);
+            StartCoroutine("BackToMenuTimer");
         }
         else
         {
@@ -68,5 +71,12 @@ public class HandManager : MonoBehaviour
         }
 
         oldHandPos = hand.transform.position;
+    }
+
+    IEnumerator BackToMenuTimer()
+    {
+        yield return new WaitForSeconds(15f);
+        Cursor.visible= true;
+        SceneManager.LoadScene("DeclanSceneButActuallyWorks");
     }
 }
