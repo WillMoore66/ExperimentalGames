@@ -10,7 +10,7 @@ public class MainMenu : Menu
 
     // Will work once project settings are edited to add scenes to build settings
     public void OnPlayButton() {
-        SceneManager.LoadScene("EvelynScene");
+        SceneManager.LoadScene("CallumScene");
         Debug.Log("hi");
     }
 
