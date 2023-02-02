@@ -25,10 +25,10 @@ public class Mud : MonoBehaviour
     IEnumerator slowDown()
     {
         playerRenderer.material = mudMat;
-        player.transform.parent.GetComponent<CharacterContoller>().theSpEEdOftheDog -= 10f;
+        player.transform.GetComponent<CharacterContoller>().theSpEEdOftheDog -= 12f;
         yield return new WaitForSeconds(mudTime);
         playerRenderer.material = defaultMat;
-        player.transform.parent.GetComponent<CharacterContoller>().theSpEEdOftheDog += 10f;
+        player.transform.GetComponent<CharacterContoller>().theSpEEdOftheDog += 12f;
 
     }
 }

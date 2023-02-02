@@ -9,6 +9,7 @@ public class FinishLine : MonoBehaviour
     {
         if (other.gameObject.tag == "Player")
         {
+            Debug.Log(Time.timeSinceLevelLoad);
             //reset game
             SceneManager.LoadScene("DogPettingTestScene");
         }

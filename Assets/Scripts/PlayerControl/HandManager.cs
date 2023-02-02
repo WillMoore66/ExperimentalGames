@@ -1,10 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
-using UnityEditor;
 using UnityEngine;
 using UnityEngine.InputSystem;
-using UnityEditor.SceneManagement;
 using UnityEngine.SceneManagement;
 
 public class HandManager : MonoBehaviour

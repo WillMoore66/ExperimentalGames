@@ -5,7 +5,6 @@ using UnityEngine;
 using System.Linq;
 using UnityEngine.InputSystem;
 using UnityEngine.Windows.Speech;
-using UnityEditor.ShaderGraph.Drawing.Inspector.PropertyDrawers;
 
 public class CharacterContoller : MonoBehaviour {
     [SerializeField] GameObject sphere;
@@ -21,12 +20,18 @@ public class CharacterContoller : MonoBehaviour {
     [SerializeField][Range(0.0f, 3.0f)] float jumpTime = 1;
     [SerializeField][Range(0.0f, 3.0f)] float jumpDistance = 1;
     [SerializeField][Range(0.0f, 10.0f)] float jumpHeight = 5;
+
+    [SerializeField] GameObject camera;
+
     InputAction forwardAction;
     InputAction jumpAction;
     InputAction turnAction;
+    InputAction playDeadAction;
 
     [SerializeField] bool constantForward;
     bool busy;
+
+    bool turningLeft;
 
     private void Awake() {
         playerInput = GetComponent<PlayerInput>();
@@ -36,12 +41,15 @@ public class CharacterContoller : MonoBehaviour {
         jumpAction.Enable();
         turnAction = playerInput.actions["Turn"];
         turnAction.Enable();
+        playDeadAction = playerInput.actions["PlayDead"];
+        playDeadAction.Enable();
 
         keywords.Add("forward", GoForward);
         keywords.Add("backwards", GoForward);
         keywords.Add("jump", Jump);
-        keywords.Add("left", Turn);
-        keywords.Add("right", Turn);
+        keywords.Add("left", TurnLeft);
+        keywords.Add("right", TurnRight);
+        keywords.Add("play dead", PlayDead);
 
         keywordRecognizer = new KeywordRecognizer(keywords.Keys.ToArray());
         keywordRecognizer.OnPhraseRecognized += OnKeywordsRecognised;
@@ -64,6 +72,11 @@ public class CharacterContoller : MonoBehaviour {
             } else if (turnAction.ReadValue<float>() != 0) {
                 Turn();
             }
+
+            if (playDeadAction.WasPerformedThisFrame())
+            {
+            PlayDead();
+            }
         }
     }
 
@@ -76,12 +89,55 @@ public class CharacterContoller : MonoBehaviour {
         this.transform.position += this.transform.forward * theSpEEdOftheDog * Time.deltaTime;
     }
 
+    void TurnLeft()
+    {
+        StartCoroutine("TurnLeftRoutine");
+    }
+
+    void TurnRight()
+    {
+        StartCoroutine("TurnRightRoutine");
+    }
+
     void Turn() {
         StartCoroutine("TurnRoutine");
     }
 
     void Jump() {
         StartCoroutine("JumpUp");
+    }
+
+    public void PlayDead()
+    {
+        StartCoroutine("PlayDeadRoutine");
+    }
+
+    public IEnumerator PlayDeadRoutine()
+    {
+        busy = true;
+        Quaternion currentRot = this.transform.rotation;
+
+        Rigidbody rb = this.GetComponent<Rigidbody>();
+        rb.useGravity = true;
+        rb.constraints = RigidbodyConstraints.None;
+
+        rb.AddTorque(this.transform.right * 1000f);
+        rb.AddTorque(this.transform.forward * UnityEngine.Random.Range(-500f, 500f));
+        rb.velocity += this.transform.forward * 10f;
+
+        //camera = this.transform.GetChild(0).gameObject;
+
+        this.transform.DetachChildren();
+
+        yield return new WaitForSeconds(5f);
+
+        camera.transform.parent = this.transform;
+        camera.transform.localPosition = new Vector3(1.5f, 3.5f, -6f);
+        camera.transform.localEulerAngles = new Vector3(15, 0, 0);
+        rb.useGravity= false;
+        rb.constraints = RigidbodyConstraints.FreezeAll;
+        this.transform.rotation = currentRot;
+        busy = false;
     }
 
     IEnumerator TurnRoutine() {
@@ -104,8 +160,34 @@ public class CharacterContoller : MonoBehaviour {
         busy = false;
     }
 
-    //Jumping needs to be fixed because the dog will jump under the ground or rotate strangely when facing the wrong direction
-    private IEnumerator JumpUp() {
+    IEnumerator TurnRightRoutine()
+    {
+        busy = true;
+            //turn right
+            sphere.transform.position = (this.transform.position + (this.transform.right * (theSpEEdOftheDog / turningSpeed)));
+            for (int i = 0; i < turningDegrees; i++)
+            {
+                yield return new WaitForFixedUpdate();
+                this.transform.RotateAround(sphere.transform.position, sphere.transform.up, turningSpeed);
+            }
+        busy = false;
+    }
+
+IEnumerator TurnLeftRoutine()
+{
+    busy = true;
+        //turn left
+        sphere.transform.position = (this.transform.position + (-this.transform.right * (theSpEEdOftheDog / turningSpeed)));
+        for (int i = 0; i < turningDegrees; i++)
+        {
+            yield return new WaitForFixedUpdate();
+            this.transform.RotateAround(sphere.transform.position, sphere.transform.up, -turningSpeed);
+        }
+        busy = false;
+}
+
+//Jumping needs to be fixed because the dog will jump under the ground or rotate strangely when facing the wrong direction
+private IEnumerator JumpUp() {
         busy = true;
         //Debug.Log("hhy");
         //sphere.transform.position = (new Vector3(this.transform.position.x, this.transform.position.y, this.transform.position.z) + this.transform.forward * theSpEEdOftheDog / 3);
