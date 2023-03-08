@@ -212,9 +212,6 @@ private IEnumerator JumpUp() {
             this.transform.position -= new Vector3(0, jumpTime, 0);
             this.transform.position += transform.forward * jumpDistance;
         }
-
         busy = false;
-
-
     }
 }
