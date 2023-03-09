@@ -32,6 +32,7 @@ public class CharacterContoller : MonoBehaviour {
     bool busy;
 
     bool turningLeft;
+    //Vector3 oldPos;
 
     private void Awake() {
         playerInput = GetComponent<PlayerInput>();
@@ -57,6 +58,7 @@ public class CharacterContoller : MonoBehaviour {
     }
 
     void FixedUpdate() {
+        //oldPos = this.transform.position;
 
         if (!busy) {
 
@@ -110,6 +112,12 @@ public class CharacterContoller : MonoBehaviour {
     public void PlayDead()
     {
         StartCoroutine("PlayDeadRoutine");
+    }
+
+    private void OnCollisionEnter(Collision collision)
+    {
+        Debug.Log("collisionTest");
+        //this.transform.position = oldPos;
     }
 
     public IEnumerator PlayDeadRoutine()
@@ -186,18 +194,9 @@ IEnumerator TurnLeftRoutine()
         busy = false;
 }
 
-//Jumping needs to be fixed because the dog will jump under the ground or rotate strangely when facing the wrong direction
-private IEnumerator JumpUp() {
+private IEnumerator JumpUp() 
+    {
         busy = true;
-        //Debug.Log("hhy");
-        //sphere.transform.position = (new Vector3(this.transform.position.x, this.transform.position.y, this.transform.position.z) + this.transform.forward * theSpEEdOftheDog / 3);
-        //for (int i = 0; i < jumpingDegrees; i++)
-        //{
-        //    yield return new WaitForFixedUpdate();
-        //    this.transform.RotateAround(sphere.transform.position, sphere.transform.right, jumpingSpeed);
-        //    this.transform.Rotate(-this.transform.right * jumpingSpeed);
-        //}
-
         float groundPos = this.transform.position.y;
 
         while (this.transform.position.y < (groundPos + jumpHeight)) {
