@@ -88,7 +88,7 @@ public class CharacterContoller : MonoBehaviour {
     }
 
     void GoForward() {
-        this.transform.position += this.transform.forward * theSpEEdOftheDog * Time.deltaTime;
+        this.transform.position += -this.transform.up * theSpEEdOftheDog * Time.deltaTime;
     }
 
     void TurnLeft()
@@ -114,12 +114,6 @@ public class CharacterContoller : MonoBehaviour {
         StartCoroutine("PlayDeadRoutine");
     }
 
-    private void OnCollisionEnter(Collision collision)
-    {
-        Debug.Log("collisionTest");
-        //this.transform.position = oldPos;
-    }
-
     public IEnumerator PlayDeadRoutine()
     {
         busy = true;
@@ -133,7 +127,8 @@ public class CharacterContoller : MonoBehaviour {
         rb.AddTorque(this.transform.forward * UnityEngine.Random.Range(-500f, 500f));
         rb.velocity += this.transform.forward * 10f;
 
-        //camera = this.transform.GetChild(0).gameObject;
+        //detach camera from this
+        camera.transform.parent = null;
 
         this.transform.DetachChildren();
 
@@ -203,13 +198,13 @@ private IEnumerator JumpUp()
             yield return new WaitForFixedUpdate();
 
             this.transform.position += new Vector3(0, jumpTime, 0);
-            this.transform.position += transform.forward * jumpDistance;
+            this.transform.position += -transform.up * jumpDistance;
         }
         while (this.transform.position.y > (groundPos)) {
             yield return new WaitForFixedUpdate();
 
             this.transform.position -= new Vector3(0, jumpTime, 0);
-            this.transform.position += transform.forward * jumpDistance;
+            this.transform.position += -transform.up * jumpDistance;
         }
         busy = false;
     }
