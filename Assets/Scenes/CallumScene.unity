@@ -40514,6 +40514,8 @@ GameObject:
   - component: {fileID: 902884093}
   - component: {fileID: 902884092}
   - component: {fileID: 902884091}
+  - component: {fileID: 902884095}
+  - component: {fileID: 902884096}
   m_Layer: 0
   m_Name: PhysicsBasedPlayer
   m_TagString: Player
@@ -40565,8 +40567,8 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 0.058508303, y: 0.09094751, z: 0.11788962}
-  m_Center: {x: 0.0012458802, y: 0.050614383, z: -0.002330482}
+  m_Size: {x: 0.058508303, y: 0.080775104, z: 0.11788961}
+  m_Center: {x: 0.0012458806, y: 0.049486082, z: -0.0023304836}
 --- !u!114 &902884093
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -40613,8 +40615,8 @@ MonoBehaviour:
   speed: 50
   angle: 90
   maxDogSpeed: 20
-  turningDegrees: 600
-  rotatingDegrees: 645
+  turningDegrees: 300
+  rotatingDegrees: 200
   turningTime: 2
   jumpTime: 1
   jumpDistance: 1
@@ -40622,6 +40624,34 @@ MonoBehaviour:
   cam: {fileID: 1727725277}
   animator: {fileID: 967938664}
   constantForward: 1
+--- !u!136 &902884095
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 902884089}
+  m_Material: {fileID: 13400000, guid: 87179006d88c8b640a864740b4d0c846, type: 2}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  m_Radius: 0.025
+  m_Height: 0.15
+  m_Direction: 2
+  m_Center: {x: -0.03, y: 0.04, z: 0}
+--- !u!136 &902884096
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 902884089}
+  m_Material: {fileID: 13400000, guid: 87179006d88c8b640a864740b4d0c846, type: 2}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  m_Radius: 0.025
+  m_Height: 0.15
+  m_Direction: 2
+  m_Center: {x: 0.03, y: 0.04, z: 0}
 --- !u!1 &904733158
 GameObject:
   m_ObjectHideFlags: 0

@@ -437,7 +437,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   mudMat: {fileID: 2100000, guid: fde764775a79cd14d8f53f2bf8de64e3, type: 2}
   mudTime: 3
-  mudSlowAmount: 20
+  mudSlowAmount: 10
 --- !u!1 &8883755233097873598
 GameObject:
   m_ObjectHideFlags: 0
