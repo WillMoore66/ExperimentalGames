@@ -15,6 +15,18 @@ public class NewCharacterController : MonoBehaviour
     public float angle = 90f;
     bool isGrounded = true;
 
+    // The amount of torque to apply per frame
+    public float torque = 10f;
+
+    // The direction of torque to apply per frame
+    public Vector3 torqueDirection = Vector3.up;
+
+    [SerializeField] public float targetAngle = 90f;
+    [SerializeField] float currentAngle = 0f;
+    Quaternion startingRotation;
+    bool turning;
+    bool startedTurning;
+
     PlayerInput playerInput;
     [SerializeField][Range(1.0f, 100.0f)] public float maxDogSpeed = 30;
     [SerializeField][Range(0.0f, 1000.0f)] float turningDegrees = 45;
@@ -88,7 +100,7 @@ public class NewCharacterController : MonoBehaviour
             }
             else if (turnAction.ReadValue<float>() != 0)
             {
-                Turn();
+                SetTurn();
             }
 
             if (playDeadAction.WasPerformedThisFrame())
@@ -96,6 +108,8 @@ public class NewCharacterController : MonoBehaviour
                 PlayDead();
             }
         }
+
+        Turn();
     }
 
     private void OnKeywordsRecognised(PhraseRecognizedEventArgs args)
@@ -125,37 +139,60 @@ public class NewCharacterController : MonoBehaviour
     //    //StartCoroutine("TurnRightRoutine");
     //}
 
+    void SetTurn()
+    {
+        Debug.Log(turning);
+        if (turning == true)
+        {
+            turning = false;
+            startingRotation = Quaternion.identity;
+            currentAngle = 0;
+        }
+        else 
+        {
+            turning = true;
+            startingRotation = this.transform.rotation;
+        }
+    }
 
     //probably better not to make new vectors every frame in these functions
     void Turn()
     {
-        //turn
-        if (turnAction.ReadValue<float>() == -1 && !busy)
+        if (turning)
         {
-            //invert rotation force
-            rb.AddTorque(Vector3.up * -rotatingDegrees);
-            busy = true;
-            StartCoroutine(CeaseBusiness());
-        }
-        //if turning right
-        else if (!busy)
-        {
-            //Quaternion startRotation = this.transform.rotation;
+            //Debug.Log(currentAngle);
+            //turn
+            if (turnAction.ReadValue<float>() == -1)
+            {
+                //invert rotation force
+                //rb.AddTorque(Vector3.up * -rotatingDegrees);
+                busy = true;
+                StartCoroutine(CeaseBusiness());
+            }
+            //if turning right
+            else
+            {
+                // Check if the current angle is less than the target angle
+                if (currentAngle < targetAngle)
+                {
+                    // Apply torque to the rigidbody
+                    rb.AddTorque(torqueDirection * torque);
 
-            //move dog sideways
-            //Vector3 force = new Vector3(Mathf.SmoothStep(0, turningDegrees, turningTime), 0, 0);
-            //rb.AddForce(force);
-
-            //rotate dog
-            rb.AddTorque(Vector3.up * rotatingDegrees);
-            //snap angle to desired angle when it gets close enough and then set angularVelocity to 0
-            //rb.angularVelocity = Vector3.zero;
-
-            //var torque = Quaternion.Inverse(transform.rotation) * startRotation;
-            //rb.AddTorque(torque.eulerAngles);
-
-            busy = true;
-            StartCoroutine(CeaseBusiness());
+                    // Update the current angle by calculating the delta angle between the previous and current rotation
+                    currentAngle = Quaternion.Angle(startingRotation, rb.rotation);
+                    turning = true; //this line might not be needed
+                }
+                else
+                {
+                    // Stop applying torque and set it to 0
+                    torque = 0f;
+                    rb.angularVelocity = Vector3.zero;
+                    turning = false;
+                    SetTurn();
+                }
+                busy = true;
+                StartCoroutine(CeaseBusiness());
+            }
         }
     }
 

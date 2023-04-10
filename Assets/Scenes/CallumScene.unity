@@ -40563,7 +40563,7 @@ BoxCollider:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 902884089}
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 13400000, guid: 87179006d88c8b640a864740b4d0c846, type: 2}
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
@@ -40614,6 +40614,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   speed: 50
   angle: 90
+  torque: 10
+  torqueDirection: {x: 0, y: -1, z: 0}
+  targetAngle: 90
+  currentAngle: 0
   maxDogSpeed: 20
   turningDegrees: 300
   rotatingDegrees: 200
@@ -52624,7 +52628,6 @@ GameObject:
   m_Component:
   - component: {fileID: 1051044463}
   - component: {fileID: 1051044462}
-  - component: {fileID: 1051044461}
   - component: {fileID: 1051044460}
   m_Layer: 0
   m_Name: Tube cam
@@ -52757,14 +52760,6 @@ MonoBehaviour:
       enableFptlForForwardOpaque: 0
       enableBigTilePrepass: 0
       isFptlEnabled: 0
---- !u!81 &1051044461
-AudioListener:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1051044459}
-  m_Enabled: 1
 --- !u!20 &1051044462
 Camera:
   m_ObjectHideFlags: 0
