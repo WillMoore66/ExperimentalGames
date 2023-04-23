@@ -21,21 +21,12 @@ public class NewCharacterController : MonoBehaviour
     // The direction of torque to apply per frame
     public Vector3 torqueDirection = Vector3.up;
 
-    [SerializeField] public float targetAngle = 90f;
-    [SerializeField] float currentAngle = 0f;
-    Quaternion startingRotation;
+    public float targetAngle;
+    float currentAngle;
     bool turning;
-    bool startedTurning;
 
     PlayerInput playerInput;
     [SerializeField][Range(1.0f, 100.0f)] public float maxDogSpeed = 30;
-    [SerializeField][Range(0.0f, 1000.0f)] float turningDegrees = 45;
-    [SerializeField][Range(0.0f, 1000.0f)] float rotatingDegrees = 90;
-    //[SerializeField][Range(1.0f, 360.0f)] float jumpingDegrees = 90;
-    [SerializeField][Range(0.0f, 10.0f)] float turningTime = 2;
-    //[SerializeField][Range(0.0f, 10.0f)] float jumpingSpeed = 2;
-    [SerializeField][Range(0.0f, 3.0f)] float jumpTime = 1;
-    [SerializeField][Range(0.0f, 3.0f)] float jumpDistance = 1;
     [SerializeField][Range(0.0f, 1000.0f)] float jumpHeight = 5;
 
     [SerializeField] GameObject cam;
@@ -101,8 +92,10 @@ public class NewCharacterController : MonoBehaviour
             }
             else if (turnAction.ReadValue<float>() != 0)
             {
+                //set temp direction variable and get current angle
                 turnDirection = turnAction.ReadValue<float>();
                 currentAngle = rb.transform.eulerAngles.y;
+                //set target angle to +90 or -90 degrees from current angle
                 if (turnAction.ReadValue<float>() == 1) {
                     targetAngle = rb.transform.rotation.eulerAngles.y + 90;
                 }
@@ -138,17 +131,6 @@ public class NewCharacterController : MonoBehaviour
         //animator.Play("AnimationName", 1, (1f / total_frames_in_animation) * desired_frame);
     }
 
-    //void TurnLeft()
-    //{
-    //    Debug.Log("left");
-    //    //StartCoroutine("TurnLeftRoutine");
-    //}
-
-    //void TurnRight()
-    //{
-    //    Debug.Log("right");
-    //    //StartCoroutine("TurnRightRoutine");
-    //}
 
     void SetTurn()
     {
@@ -160,7 +142,6 @@ public class NewCharacterController : MonoBehaviour
         else 
         {
             turning = true;
-
         }
     }
 
@@ -169,22 +150,20 @@ public class NewCharacterController : MonoBehaviour
     {
         if (turning)
         {
-            //Debug.Log(currentAngle);
-            //turn
+            //set variable to dog's current angle
             currentAngle = rb.transform.eulerAngles.y;
             Debug.Log("curret angle = " + currentAngle + " target angle = " + targetAngle);
+
+            //if turning left
             if (turnDirection == 1f)
             {
                 // Check if the current angle is less than the target angle
                 if (currentAngle < targetAngle) {
                     // Apply torque to the rigidbody
                     rb.AddTorque(torqueDirection * -torque);
-
-                    // Update the current angle by calculating the delta angle between the previous and current rotation
-                    //currentAngle = Quaternion.Angle(startingRotation, rb.rotation);
                     turning = true; //this line might not be needed
                 } else {
-                    // Stop applying torque and set it to 0
+                    //set angular velocity to 0 and reset temp direction variable
                     rb.angularVelocity = Vector3.zero;
                     turning = false;
                     turnDirection = 0f;
@@ -192,6 +171,7 @@ public class NewCharacterController : MonoBehaviour
                 busy = true;
                 StartCoroutine(CeaseBusiness());
             }
+
             //if turning right
             else if (turnDirection == -1f)
             {
@@ -200,12 +180,11 @@ public class NewCharacterController : MonoBehaviour
                 {
                     // Apply torque to the rigidbody
                     rb.AddTorque(torqueDirection * torque);
-
-                    // Update the current angle by calculating the delta angle between the previous and current rotation
                     turning = true; //this line might not be needed
                 }
                 else
                 {
+                    //set angular velocity to 0 and reset temp direction variable
                     rb.angularVelocity = Vector3.zero;
                     turning = false;
                     turnDirection = 0f;
