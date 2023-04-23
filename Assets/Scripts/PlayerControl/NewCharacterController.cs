@@ -48,6 +48,7 @@ public class NewCharacterController : MonoBehaviour
 
     [SerializeField] bool constantForward;
     bool busy;
+    float turnDirection;
 
     bool turningLeft;
     Rigidbody rb;
@@ -100,6 +101,14 @@ public class NewCharacterController : MonoBehaviour
             }
             else if (turnAction.ReadValue<float>() != 0)
             {
+                turnDirection = turnAction.ReadValue<float>();
+                currentAngle = rb.transform.eulerAngles.y;
+                if (turnAction.ReadValue<float>() == 1) {
+                    targetAngle = rb.transform.rotation.eulerAngles.y + 90;
+                }
+                else if (turnAction.ReadValue<float>() == -1) {
+                    targetAngle = rb.transform.rotation.eulerAngles.y - 90;
+                }
                 SetTurn();
             }
 
@@ -108,6 +117,8 @@ public class NewCharacterController : MonoBehaviour
                 PlayDead();
             }
         }
+        Debug.Log("is turning"+ turning);
+
 
         Turn();
     }
@@ -145,13 +156,11 @@ public class NewCharacterController : MonoBehaviour
         if (turning == true)
         {
             turning = false;
-            startingRotation = Quaternion.identity;
-            currentAngle = 0;
         }
         else 
         {
             turning = true;
-            startingRotation = this.transform.rotation;
+
         }
     }
 
@@ -162,33 +171,44 @@ public class NewCharacterController : MonoBehaviour
         {
             //Debug.Log(currentAngle);
             //turn
-            if (turnAction.ReadValue<float>() == -1)
+            currentAngle = rb.transform.eulerAngles.y;
+            Debug.Log("curret angle = " + currentAngle + " target angle = " + targetAngle);
+            if (turnDirection == 1f)
             {
-                //invert rotation force
-                //rb.AddTorque(Vector3.up * -rotatingDegrees);
+                // Check if the current angle is less than the target angle
+                if (currentAngle < targetAngle) {
+                    // Apply torque to the rigidbody
+                    rb.AddTorque(torqueDirection * -torque);
+
+                    // Update the current angle by calculating the delta angle between the previous and current rotation
+                    //currentAngle = Quaternion.Angle(startingRotation, rb.rotation);
+                    turning = true; //this line might not be needed
+                } else {
+                    // Stop applying torque and set it to 0
+                    rb.angularVelocity = Vector3.zero;
+                    turning = false;
+                    turnDirection = 0f;
+                }
                 busy = true;
                 StartCoroutine(CeaseBusiness());
             }
             //if turning right
-            else
+            else if (turnDirection == -1f)
             {
                 // Check if the current angle is less than the target angle
-                if (currentAngle < targetAngle)
+                if (currentAngle > targetAngle)
                 {
                     // Apply torque to the rigidbody
                     rb.AddTorque(torqueDirection * torque);
 
                     // Update the current angle by calculating the delta angle between the previous and current rotation
-                    currentAngle = Quaternion.Angle(startingRotation, rb.rotation);
                     turning = true; //this line might not be needed
                 }
                 else
                 {
-                    // Stop applying torque and set it to 0
-                    torque = 0f;
                     rb.angularVelocity = Vector3.zero;
                     turning = false;
-                    SetTurn();
+                    turnDirection = 0f;
                 }
                 busy = true;
                 StartCoroutine(CeaseBusiness());
@@ -226,3 +246,4 @@ public class NewCharacterController : MonoBehaviour
         isGrounded = true;
     }
 }
+
