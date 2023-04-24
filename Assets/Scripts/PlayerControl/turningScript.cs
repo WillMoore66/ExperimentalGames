@@ -14,7 +14,6 @@ public class turningScript : MonoBehaviour
     private bool turning;
     private bool startedTurning;
 
-
     void Start()
     {
         rb = GetComponent<Rigidbody>();
@@ -23,7 +22,6 @@ public class turningScript : MonoBehaviour
 
     void Update()
     {
-
         if (startedTurning) 
         {
             Turn();
@@ -40,7 +38,7 @@ public class turningScript : MonoBehaviour
 
             // Update the current angle by calculating the delta angle between the previous and current rotation
             currentAngle += Quaternion.Angle(transform.rotation, rb.rotation);
-            turning = true; 
+            turning = true;
         }
         else
         {

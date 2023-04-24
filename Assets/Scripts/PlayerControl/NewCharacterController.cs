@@ -25,6 +25,8 @@ public class NewCharacterController : MonoBehaviour
     float currentAngle;
     bool turning;
 
+    int dogDirection;
+
     PlayerInput playerInput;
     [SerializeField][Range(1.0f, 100.0f)] public float maxDogSpeed = 30;
     [SerializeField][Range(0.0f, 1000.0f)] float jumpHeight = 5;
@@ -97,10 +99,12 @@ public class NewCharacterController : MonoBehaviour
                 currentAngle = rb.transform.eulerAngles.y;
                 //set target angle to +90 or -90 degrees from current angle
                 if (turnAction.ReadValue<float>() == 1) {
-                    targetAngle = rb.transform.rotation.eulerAngles.y + 90;
+                    //targetAngle = rb.transform.rotation.eulerAngles.y + 90;
+                    Turn(false);
                 }
                 else if (turnAction.ReadValue<float>() == -1) {
-                    targetAngle = rb.transform.rotation.eulerAngles.y - 90;
+                    //targetAngle = rb.transform.rotation.eulerAngles.y - 90;
+                    Turn(true);
                 }
                 SetTurn();
             }
@@ -109,11 +113,9 @@ public class NewCharacterController : MonoBehaviour
             {
                 PlayDead();
             }
+            ConstantTurn();
         }
-        Debug.Log("is turning"+ turning);
-
-
-        Turn();
+        Debug.Log("is turning" + turning);
     }
 
     private void OnKeywordsRecognised(PhraseRecognizedEventArgs args)
@@ -131,7 +133,6 @@ public class NewCharacterController : MonoBehaviour
         //animator.Play("AnimationName", 1, (1f / total_frames_in_animation) * desired_frame);
     }
 
-
     void SetTurn()
     {
         Debug.Log(turning);
@@ -139,60 +140,99 @@ public class NewCharacterController : MonoBehaviour
         {
             turning = false;
         }
-        else 
+        else
         {
             turning = true;
         }
     }
 
     //probably better not to make new vectors every frame in these functions
-    void Turn()
+    //void Turn()
+    //{
+    //    if (turning)
+    //    {
+    //        //set variable to dog's current angle
+    //        currentAngle = rb.transform.eulerAngles.y;
+    //        Debug.Log("current angle = " + currentAngle + " target angle = " + targetAngle);
+
+    //        //if turning left
+    //        if (turnDirection == 1f)
+    //        {
+    //            // Check if the current angle is less than the target angle
+    //            if (currentAngle < targetAngle) {
+    //                // Apply torque to the rigidbody
+    //                rb.AddTorque(torqueDirection * -torque);
+    //                turning = true; //this line might not be needed
+    //            } else {
+    //                //set angular velocity to 0 and reset temp direction variable
+    //                rb.angularVelocity = Vector3.zero;
+    //                turning = false;
+    //                turnDirection = 0f;
+    //            }
+    //            busy = true;
+    //            StartCoroutine(CeaseBusiness());
+    //        }
+    //        //if turning right
+    //        else if (turnDirection == -1f)
+    //        {
+    //            // Check if the current angle is less than the target angle
+    //            if (currentAngle > targetAngle)
+    //            {
+    //                // Apply torque to the rigidbody
+    //                rb.AddTorque(torqueDirection * torque);
+    //                turning = true; //this line might not be needed
+    //            }
+    //            else
+    //            {
+    //                //set angular velocity to 0 and reset temp direction variable
+    //                rb.angularVelocity = Vector3.zero;
+    //                turning = false;
+    //                turnDirection = 0f;
+    //            }
+    //            busy = true;
+    //            StartCoroutine(CeaseBusiness());
+    //        }
+    //    }
+    //}
+
+    void Turn(bool rightwards)
     {
-        if (turning)
+        if (rightwards)
         {
-            //set variable to dog's current angle
-            currentAngle = rb.transform.eulerAngles.y;
-            Debug.Log("curret angle = " + currentAngle + " target angle = " + targetAngle);
-
-            //if turning left
-            if (turnDirection == 1f)
+            if (dogDirection == 3)
             {
-                // Check if the current angle is less than the target angle
-                if (currentAngle < targetAngle) {
-                    // Apply torque to the rigidbody
-                    rb.AddTorque(torqueDirection * -torque);
-                    turning = true; //this line might not be needed
-                } else {
-                    //set angular velocity to 0 and reset temp direction variable
-                    rb.angularVelocity = Vector3.zero;
-                    turning = false;
-                    turnDirection = 0f;
-                }
-                busy = true;
-                StartCoroutine(CeaseBusiness());
+                dogDirection = 0;
             }
-
-            //if turning right
-            else if (turnDirection == -1f)
+            else
             {
-                // Check if the current angle is less than the target angle
-                if (currentAngle > targetAngle)
-                {
-                    // Apply torque to the rigidbody
-                    rb.AddTorque(torqueDirection * torque);
-                    turning = true; //this line might not be needed
-                }
-                else
-                {
-                    //set angular velocity to 0 and reset temp direction variable
-                    rb.angularVelocity = Vector3.zero;
-                    turning = false;
-                    turnDirection = 0f;
-                }
-                busy = true;
-                StartCoroutine(CeaseBusiness());
+                dogDirection++;
             }
         }
+        else 
+        {
+            if (dogDirection == 0)
+            {
+                dogDirection = 3;
+            }
+            else 
+            {
+                dogDirection--;
+            }
+        }
+    }
+
+    void ConstantTurn()
+    {
+        //Vector3 dogForward = this.transform.forward;
+        //Vector3 rbForward = dogDirection * 90;
+
+        //Vector3 torque = Vector3.Cross(dogForward, rbForward);
+        //rb.AddTorque(torque);
+        float torque = 10f;
+
+        Vector3 eulerAngle = new Vector3(0, dogDirection * 90, 0);
+        Quaternion deltaRotation = Quaternion.Euler(eulerAngle * Time.deltaTime);
+        rb.AddTorque(deltaRotation.eulerAngles * torque);
     }
 
     IEnumerator CeaseBusiness()
