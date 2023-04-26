@@ -9,7 +9,7 @@ public class PlayAnimation : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("PhysicsBasedPlayer"))
+        if (other.CompareTag("Player"))
         {
             myAnimationController.SetBool("DogInTunnel", true);
         }
@@ -17,7 +17,7 @@ public class PlayAnimation : MonoBehaviour
 
     private void OnTriggerExit(Collider other)
     {
-        if (other.CompareTag("PhysicsBasedPlayer"))
+        if (other.CompareTag("Player"))
         {
             myAnimationController.SetBool("DogInTunnel", false);
         }
