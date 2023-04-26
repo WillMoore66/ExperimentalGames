@@ -4763,7 +4763,7 @@ MeshRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 93207921}
-  m_Enabled: 1
+  m_Enabled: 0
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
@@ -6555,7 +6555,7 @@ GameObject:
   m_Component:
   - component: {fileID: 148853155}
   m_Layer: 0
-  m_Name: Line
+  m_Name: CorrectionLine
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -12114,7 +12114,7 @@ GameObject:
   - component: {fileID: 297269861}
   m_Layer: 0
   m_Name: FloorTexture
-  m_TagString: Untagged
+  m_TagString: floor
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 2147483647
@@ -22158,7 +22158,7 @@ BoxCollider:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 541509074}
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 13400000, guid: 87179006d88c8b640a864740b4d0c846, type: 2}
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
@@ -35945,7 +35945,7 @@ BoxCollider:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 862761484}
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 13400000, guid: 87179006d88c8b640a864740b4d0c846, type: 2}
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
@@ -40671,7 +40671,7 @@ Rigidbody:
   m_AngularDrag: 0.05
   m_UseGravity: 1
   m_IsKinematic: 0
-  m_Interpolate: 0
+  m_Interpolate: 2
   m_Constraints: 80
   m_CollisionDetection: 1
 --- !u!65 &902884092
@@ -40731,10 +40731,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 50
-  angle: 90
-  torque: 10
-  torqueDirection: {x: 0, y: -1, z: 0}
-  targetAngle: 90
+  turnCooldown: 2
+  turnSpeed: 1
+  numTurnSteps: 60
   maxDogSpeed: 20
   jumpHeight: 650
   cam: {fileID: 1727725277}
@@ -58242,7 +58241,7 @@ LineRenderer:
   m_RenderingLayerMask: 257
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: b9dad7b14895d504eacbe77545709e67, type: 2}
+  - {fileID: 2100000, guid: 2e2ff978206296c43942f194b7c6037d, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -58290,8 +58289,8 @@ LineRenderer:
       m_RotationOrder: 4
     colorGradient:
       serializedVersion: 2
-      key0: {r: 1, g: 1, b: 1, a: 1}
-      key1: {r: 1, g: 0, b: 1, a: 1}
+      key0: {r: 0, g: 0, b: 0, a: 1}
+      key1: {r: 0, g: 0, b: 0, a: 1}
       key2: {r: 1, g: 1, b: 1, a: 0}
       key3: {r: 1, g: 1, b: 1, a: 0}
       key4: {r: 0, g: 0, b: 0, a: 0}

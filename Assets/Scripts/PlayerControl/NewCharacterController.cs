@@ -12,18 +12,12 @@ public class NewCharacterController : MonoBehaviour
     private KeywordRecognizer keywordRecognizer;
 
     public float speed = 10f;
-    public float angle = 90f;
     bool isGrounded = true;
 
-    // The amount of torque to apply per frame
-    public float torque = 10f;
-
-    // The direction of torque to apply per frame
-    public Vector3 torqueDirection = Vector3.up;
-
-    public float targetAngle;
-    float currentAngle;
-    bool turning;
+    private float targetAngle;
+    [SerializeField] float turnCooldown;
+    [SerializeField] float turnSpeed;
+    [SerializeField] float numTurnSteps;
 
     int dogDirection;
 
@@ -41,10 +35,8 @@ public class NewCharacterController : MonoBehaviour
 
     [SerializeField] bool constantForward;
     bool busy;
-    float turnDirection;
-
-    bool turningLeft;
     Rigidbody rb;
+
 
     private void Awake()
     {
@@ -94,10 +86,6 @@ public class NewCharacterController : MonoBehaviour
             }
             else if (turnAction.ReadValue<float>() != 0)
             {
-                //set temp direction variable and get current angle
-                turnDirection = turnAction.ReadValue<float>();
-                currentAngle = rb.transform.eulerAngles.y;
-                //set target angle to +90 or -90 degrees from current angle
                 if (turnAction.ReadValue<float>() == 1) {
                     //targetAngle = rb.transform.rotation.eulerAngles.y + 90;
                     Turn(false);
@@ -106,22 +94,13 @@ public class NewCharacterController : MonoBehaviour
                     //targetAngle = rb.transform.rotation.eulerAngles.y - 90;
                     Turn(true);
                 }
-                SetTurn();
             }
 
             if (playDeadAction.WasPerformedThisFrame())
             {
                 PlayDead();
             }
-            ConstantTurn();
         }
-        Debug.Log("is turning" + turning);
-    }
-
-    private void OnKeywordsRecognised(PhraseRecognizedEventArgs args)
-    {
-        Debug.Log("Keyword: " + args.text);
-        keywords[args.text].Invoke();
     }
 
     void GoForward()
@@ -130,114 +109,47 @@ public class NewCharacterController : MonoBehaviour
         {
             rb.velocity = new Vector3(rb.velocity.x, rb.velocity.y, rb.velocity.z) + this.transform.forward;
         }
-        //animator.Play("AnimationName", 1, (1f / total_frames_in_animation) * desired_frame);
     }
-
-    void SetTurn()
-    {
-        Debug.Log(turning);
-        if (turning == true)
-        {
-            turning = false;
-        }
-        else
-        {
-            turning = true;
-        }
-    }
-
-    //probably better not to make new vectors every frame in these functions
-    //void Turn()
-    //{
-    //    if (turning)
-    //    {
-    //        //set variable to dog's current angle
-    //        currentAngle = rb.transform.eulerAngles.y;
-    //        Debug.Log("current angle = " + currentAngle + " target angle = " + targetAngle);
-
-    //        //if turning left
-    //        if (turnDirection == 1f)
-    //        {
-    //            // Check if the current angle is less than the target angle
-    //            if (currentAngle < targetAngle) {
-    //                // Apply torque to the rigidbody
-    //                rb.AddTorque(torqueDirection * -torque);
-    //                turning = true; //this line might not be needed
-    //            } else {
-    //                //set angular velocity to 0 and reset temp direction variable
-    //                rb.angularVelocity = Vector3.zero;
-    //                turning = false;
-    //                turnDirection = 0f;
-    //            }
-    //            busy = true;
-    //            StartCoroutine(CeaseBusiness());
-    //        }
-    //        //if turning right
-    //        else if (turnDirection == -1f)
-    //        {
-    //            // Check if the current angle is less than the target angle
-    //            if (currentAngle > targetAngle)
-    //            {
-    //                // Apply torque to the rigidbody
-    //                rb.AddTorque(torqueDirection * torque);
-    //                turning = true; //this line might not be needed
-    //            }
-    //            else
-    //            {
-    //                //set angular velocity to 0 and reset temp direction variable
-    //                rb.angularVelocity = Vector3.zero;
-    //                turning = false;
-    //                turnDirection = 0f;
-    //            }
-    //            busy = true;
-    //            StartCoroutine(CeaseBusiness());
-    //        }
-    //    }
-    //}
 
     void Turn(bool rightwards)
     {
-        if (rightwards)
+        if (!busy)
         {
-            if (dogDirection == 3)
+            StartCoroutine("CeaseBusiness");
+            busy = true;
+            //wrap the dogDirection around if it reaches bounds
+            if (!rightwards)
             {
-                dogDirection = 0;
+                if (dogDirection == 3)
+                {
+                    dogDirection = 0;
+                }
+                else
+                {
+                    dogDirection++;
+                }
             }
             else
             {
-                dogDirection++;
+                if (dogDirection == 0)
+                {
+                    dogDirection = 3;
+                }
+                else
+                {
+                    dogDirection--;
+                }
             }
+            targetAngle = dogDirection * 90;
+            Debug.Log("targetAngle: " + targetAngle);
+
+            rb.MoveRotation(Quaternion.Euler(0, targetAngle, 0));
         }
-        else 
-        {
-            if (dogDirection == 0)
-            {
-                dogDirection = 3;
-            }
-            else 
-            {
-                dogDirection--;
-            }
-        }
-    }
-
-    void ConstantTurn()
-    {
-        //Vector3 dogForward = this.transform.forward;
-        //Vector3 rbForward = dogDirection * 90;
-
-        //Vector3 torque = Vector3.Cross(dogForward, rbForward);
-        //rb.AddTorque(torque);
-        float torque = 10f;
-
-        Vector3 eulerAngle = new Vector3(0, dogDirection * 90, 0);
-        Quaternion deltaRotation = Quaternion.Euler(eulerAngle * Time.deltaTime);
-        rb.AddTorque(deltaRotation.eulerAngles * torque);
     }
 
     IEnumerator CeaseBusiness()
     {
-        yield return new WaitForSeconds(1);
+        yield return new WaitForSeconds(turnCooldown);
         busy = false;
     }
 
@@ -259,10 +171,19 @@ public class NewCharacterController : MonoBehaviour
         //enable ragdoll
     }
 
+    private void OnKeywordsRecognised(PhraseRecognizedEventArgs args)
+    {
+        Debug.Log("Keyword: " + args.text);
+        keywords[args.text].Invoke();
+    }
+
     //this is pretty unsafe as it will allow the player to jump on anything even if they are not below the player
     void OnCollisionEnter(Collision collision)
     {
-        isGrounded = true;
+        if (collision.gameObject.tag == "floor")
+        {
+            isGrounded = true;
+        }
     }
 }
 
