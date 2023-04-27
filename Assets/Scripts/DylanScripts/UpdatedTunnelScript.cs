@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class TunnelScript : MonoBehaviour
+public class UpdatedTunnelScript : MonoBehaviour
 {
     [SerializeField] GameObject tunnelEntrance, tunnelEnd;
     [SerializeField] GameObject dog, sphere;
