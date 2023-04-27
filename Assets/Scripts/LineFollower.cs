@@ -37,8 +37,10 @@ public class LineFollower : MonoBehaviour
         index = 0;
         this.transform.position = target;
 
+        Vector3 force = target - player.transform.position * forceStrength;
+
         //add a force to the player that moves them towards the point
-        player.GetComponent<Rigidbody>().AddForce(target - player.transform.position * forceStrength);
+        player.GetComponent<Rigidbody>().AddForce(new Vector3(force.x,0,force.z));
     }
 
     // Calculate the closest point using the formula from https://en.wikipedia.org/wiki/Distance_from_a_point_to_a_line#Vector_formulation

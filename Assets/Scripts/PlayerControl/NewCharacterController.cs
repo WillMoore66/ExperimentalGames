@@ -23,7 +23,7 @@ public class NewCharacterController : MonoBehaviour
 
     PlayerInput playerInput;
     [SerializeField][Range(1.0f, 100.0f)] public float maxDogSpeed = 30;
-    [SerializeField][Range(0.0f, 1000.0f)] float jumpHeight = 5;
+    [SerializeField][Range(0.0f, 10000.0f)] float jumpHeight = 5;
 
     [SerializeField] GameObject cam;
     [SerializeField] Animator animator;

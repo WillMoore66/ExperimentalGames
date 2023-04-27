@@ -1,0 +1,365 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &2593656817598398153
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2593656817598398157}
+  - component: {fileID: 2593656817598398158}
+  - component: {fileID: 2593656817598398152}
+  - component: {fileID: 2593656817598398156}
+  - component: {fileID: 2593656817598398163}
+  m_Layer: 0
+  m_Name: TunnelEntrance
+  m_TagString: Untagged
+  m_Icon: {fileID: -5487077368411116049, guid: 0000000000000000d000000000000000, type: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2593656817598398157
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2593656817598398153}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 2071368376570125167}
+  m_RootOrder: -1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!33 &2593656817598398158
+MeshFilter:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2593656817598398153}
+  m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!65 &2593656817598398152
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2593656817598398153}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1, y: 1, z: 1}
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &2593656817598398156
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2593656817598398153}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e3318ad64a0f81a478c9d267093b046e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  tunnelEntrance: {fileID: 2593656817598398153}
+  tunnelEnd: {fileID: 2593656817781564630}
+  dog: {fileID: 0}
+  sphere: {fileID: 0}
+  mainCam: {fileID: 0}
+  tunnelCam: {fileID: 0}
+--- !u!114 &2593656817598398163
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2593656817598398153}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 66084948687d8db43b3ab612e326b16c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  myAnimationController: {fileID: 2593656818016696780}
+--- !u!1 &2593656817781564630
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2593656817781564629}
+  m_Layer: 0
+  m_Name: TunnelEnd
+  m_TagString: Untagged
+  m_Icon: {fileID: 3306451490063965843, guid: 0000000000000000d000000000000000, type: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2593656817781564629
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2593656817781564630}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -6.3140016, y: 0.06399994, z: 0.7019989}
+  m_LocalScale: {x: 0.2, y: 0.2, z: 0.2}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 2071368376570125167}
+  m_RootOrder: -1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &2593656818453721281
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2593656818453721280}
+  - component: {fileID: 2593656818453721284}
+  - component: {fileID: 2593656818453721285}
+  - component: {fileID: 2593656818453721286}
+  - component: {fileID: 2593656818453721287}
+  m_Layer: 0
+  m_Name: TunnelEntrance (1)
+  m_TagString: Untagged
+  m_Icon: {fileID: -5487077368411116049, guid: 0000000000000000d000000000000000, type: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2593656818453721280
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2593656818453721281}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -6.392572, y: 0, z: 0.46962282}
+  m_LocalScale: {x: 6.142167, y: 3.7931, z: 3.7931}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 2071368376570125167}
+  m_RootOrder: -1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!33 &2593656818453721284
+MeshFilter:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2593656818453721281}
+  m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!65 &2593656818453721285
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2593656818453721281}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1, y: 1, z: 1}
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &2593656818453721286
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2593656818453721281}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 66084948687d8db43b3ab612e326b16c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  myAnimationController: {fileID: 2593656818016696780}
+--- !u!114 &2593656818453721287
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2593656818453721281}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 08fbe1032e5173d40ab75f590630bdb2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  tunnelEntrance: {fileID: 2593656817598398153}
+  tunnelEnd: {fileID: 2593656817781564630}
+  dog: {fileID: 0}
+  sphere: {fileID: 0}
+  mainCam: {fileID: 0}
+  tunnelCam: {fileID: 0}
+--- !u!1 &4342584155876702019
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2071368376570125167}
+  m_Layer: 0
+  m_Name: Tunnel
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2071368376570125167
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4342584155876702019}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 320.20285, y: -18.818037, z: -198.25812}
+  m_LocalScale: {x: 5, y: 5, z: 5}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 2593656817598398157}
+  - {fileID: 2593656817781564629}
+  - {fileID: 2626790861657947076}
+  - {fileID: 2593656818453721280}
+  m_Father: {fileID: 0}
+  m_RootOrder: -1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1001 &2593656818347564079
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 2
+    m_TransformParent: {fileID: 2071368376570125167}
+    m_Modifications:
+    - target: {fileID: -8679921383154817045, guid: 958b21423025b624fb721f20574fe356,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: -1
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 958b21423025b624fb721f20574fe356,
+        type: 3}
+      propertyPath: m_LocalScale.x
+      value: 4.4150615
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 958b21423025b624fb721f20574fe356,
+        type: 3}
+      propertyPath: m_LocalScale.y
+      value: 3.441496
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 958b21423025b624fb721f20574fe356,
+        type: 3}
+      propertyPath: m_LocalScale.z
+      value: 3.9687433
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 958b21423025b624fb721f20574fe356,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -2.6419983
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 958b21423025b624fb721f20574fe356,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.03599968
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 958b21423025b624fb721f20574fe356,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -4.071201
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 958b21423025b624fb721f20574fe356,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.7261517
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 958b21423025b624fb721f20574fe356,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 958b21423025b624fb721f20574fe356,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0.6875345
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 958b21423025b624fb721f20574fe356,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 958b21423025b624fb721f20574fe356,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 958b21423025b624fb721f20574fe356,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 86.871
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 958b21423025b624fb721f20574fe356,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -7511558181221131132, guid: 958b21423025b624fb721f20574fe356,
+        type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: ca1e2f46ee131474fbec7cd979696369, type: 2}
+    - target: {fileID: 919132149155446097, guid: 958b21423025b624fb721f20574fe356,
+        type: 3}
+      propertyPath: m_Name
+      value: tunnelanimated4
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_AddedGameObjects: []
+  m_SourcePrefab: {fileID: 100100000, guid: 958b21423025b624fb721f20574fe356, type: 3}
+--- !u!4 &2626790861657947076 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 958b21423025b624fb721f20574fe356,
+    type: 3}
+  m_PrefabInstance: {fileID: 2593656818347564079}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &3404700374067405182 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: 958b21423025b624fb721f20574fe356,
+    type: 3}
+  m_PrefabInstance: {fileID: 2593656818347564079}
+  m_PrefabAsset: {fileID: 0}
+--- !u!95 &2593656818016696780
+Animator:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3404700374067405182}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 165d1f909537cfd45adf3f7372018847, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0

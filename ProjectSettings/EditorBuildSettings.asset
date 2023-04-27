@@ -17,4 +17,6 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/DogPettingTestScene.unity
     guid: 3638117a75fa4b54c9c9f96f988902cf
-  m_configObjects: {}
+  m_configObjects:
+    com.unity.input.settings: {fileID: 11400000, guid: 35d43376eaa39b245ba66c48a8934b1a,
+      type: 2}
