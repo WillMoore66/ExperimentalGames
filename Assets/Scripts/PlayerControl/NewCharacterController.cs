@@ -141,7 +141,7 @@ public class NewCharacterController : MonoBehaviour
                 }
             }
             targetAngle = dogDirection * 90;
-            Debug.Log("targetAngle: " + targetAngle);
+            //Debug.Log("targetAngle: " + targetAngle);
 
             rb.MoveRotation(Quaternion.Euler(0, targetAngle, 0));
         }

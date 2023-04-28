@@ -438,6 +438,8 @@ MonoBehaviour:
   mudMat: {fileID: 2100000, guid: fde764775a79cd14d8f53f2bf8de64e3, type: 2}
   mudTime: 3
   mudSlowAmount: 5
+  defaultMat: {fileID: -710910164944623929, guid: bcf6e253c69f3034da70d0c31d7b10cc,
+    type: 3}
 --- !u!1 &8883755233097873598
 GameObject:
   m_ObjectHideFlags: 0

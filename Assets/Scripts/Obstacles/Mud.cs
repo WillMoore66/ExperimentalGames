@@ -9,7 +9,7 @@ public class Mud : MonoBehaviour
     [SerializeField] int mudSlowAmount;
 
     GameObject player;
-    Material defaultMat;
+    [SerializeField] Material defaultMat;
     SkinnedMeshRenderer playerRenderer;
 
     private void OnTriggerEnter(Collider other)
@@ -19,7 +19,6 @@ public class Mud : MonoBehaviour
             player = other.gameObject;
             //this is slow as it checks in all children and there are a lot of them
             playerRenderer = player.GetComponentInChildren<SkinnedMeshRenderer>();
-            defaultMat = playerRenderer.material;
             StartCoroutine("slowDown");
         }
     }
@@ -30,6 +29,7 @@ public class Mud : MonoBehaviour
         player.transform.GetComponent<NewCharacterController>().maxDogSpeed -= mudSlowAmount;
         yield return new WaitForSeconds(mudTime);
         playerRenderer.material = defaultMat;
+        Debug.Log("Switching material to " + defaultMat.name);
         player.transform.GetComponent<NewCharacterController>().maxDogSpeed += mudSlowAmount;
     }
 }
