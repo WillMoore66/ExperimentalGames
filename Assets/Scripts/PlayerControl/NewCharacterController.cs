@@ -5,6 +5,7 @@ using UnityEngine;
 using System.Linq;
 using UnityEngine.InputSystem;
 using UnityEngine.Windows.Speech;
+using Unity.Mathematics;
 
 public class NewCharacterController : MonoBehaviour
 {
@@ -36,6 +37,8 @@ public class NewCharacterController : MonoBehaviour
     [SerializeField] bool constantForward;
     bool busy;
     Rigidbody rb;
+
+    [SerializeField]private float rotspeed = 1.0f;
 
 
     private void Awake()
@@ -101,6 +104,7 @@ public class NewCharacterController : MonoBehaviour
                 PlayDead();
             }
         }
+        
     }
 
     void GoForward()
@@ -118,6 +122,7 @@ public class NewCharacterController : MonoBehaviour
             StartCoroutine("CeaseBusiness");
             busy = true;
             //wrap the dogDirection around if it reaches bounds
+            //0 = +Z    1= -X   2= -Z   3= +X
             if (!rightwards)
             {
                 if (dogDirection == 3)
@@ -143,9 +148,21 @@ public class NewCharacterController : MonoBehaviour
             targetAngle = dogDirection * 90;
             //Debug.Log("targetAngle: " + targetAngle);
 
-            rb.MoveRotation(Quaternion.Euler(0, targetAngle, 0));
+            StartCoroutine("turning");
+            
+
         }
     }
+
+    IEnumerator turning() {
+        for (float i = rb.rotation.y; i < targetAngle/5; i++) {
+            rb.MoveRotation(Quaternion.Euler(0, i*5, 0));
+            yield return new WaitForFixedUpdate();
+        }
+        
+    }
+
+
 
     IEnumerator CeaseBusiness()
     {
