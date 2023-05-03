@@ -5,7 +5,6 @@ using UnityEngine;
 using System.Linq;
 using UnityEngine.InputSystem;
 using UnityEngine.Windows.Speech;
-using Unity.Mathematics;
 
 public class NewCharacterController : MonoBehaviour
 {
@@ -15,7 +14,11 @@ public class NewCharacterController : MonoBehaviour
     public float speed = 10f;
     bool isGrounded = true;
 
+    float currentAngle = 0f;
+    float rotationDuration = 1f;
     private float targetAngle;
+
+    [SerializeField] float speedWhileTurning;
     [SerializeField] float turnCooldown;
     [SerializeField] float turnSpeed;
     [SerializeField] float numTurnSteps;
@@ -37,9 +40,11 @@ public class NewCharacterController : MonoBehaviour
     [SerializeField] bool constantForward;
     bool busy;
     Rigidbody rb;
+    [SerializeField] float reverseTime;
+    [SerializeField] float reverseVelocity;
 
-    [SerializeField]private float rotspeed = 1.0f;
-
+    public bool jumping = false;
+    public bool tunnelling = false;
 
     private void Awake()
     {
@@ -58,12 +63,14 @@ public class NewCharacterController : MonoBehaviour
         keywords.Add("forward", GoForward);
         keywords.Add("backwards", GoForward);
         keywords.Add("jump", Jump);
-        //keywords.Add("left", TurnLeft);
-        //keywords.Add("right", TurnRight);
+        keywords.Add("left", TurnLeft);
+        keywords.Add("right", TurnRight);
+        keywords.Add("reverse", Reverse);
+        keywords.Add("tunnel", Tunnel);
         keywords.Add("play dead", PlayDead);
 
         //setup keywordRecognizer
-        keywordRecognizer = new KeywordRecognizer(keywords.Keys.ToArray());
+        keywordRecognizer = new KeywordRecognizer(keywords.Keys.ToArray(), ConfidenceLevel.Low);
         keywordRecognizer.OnPhraseRecognized += OnKeywordsRecognised;
         keywordRecognizer.Start();
 
@@ -104,7 +111,7 @@ public class NewCharacterController : MonoBehaviour
                 PlayDead();
             }
         }
-        
+        Debug.Log("keywords recognized: " + keywordRecognizer.IsRunning);
     }
 
     void GoForward()
@@ -113,6 +120,33 @@ public class NewCharacterController : MonoBehaviour
         {
             rb.velocity = new Vector3(rb.velocity.x, rb.velocity.y, rb.velocity.z) + this.transform.forward;
         }
+    }
+
+    void Reverse()
+    {
+        if (rb.velocity.magnitude < maxDogSpeed)
+        {
+            rb.velocity = this.transform.forward*-reverseVelocity;
+        }
+        StartCoroutine("ReverseRoutine");
+    }
+
+    IEnumerator ReverseRoutine()
+    {
+        constantForward = false;
+        yield return new WaitForSeconds(reverseTime);
+        constantForward = true;
+    }
+
+    //tiny functions should be unecessary but are required for voice commands
+    void TurnLeft()
+    {
+        Turn(true);
+    }
+
+    void TurnRight()
+    {
+        Turn(false);
     }
 
     void Turn(bool rightwards)
@@ -145,25 +179,41 @@ public class NewCharacterController : MonoBehaviour
                     dogDirection--;
                 }
             }
+            currentAngle = targetAngle;
             targetAngle = dogDirection * 90;
-            //Debug.Log("targetAngle: " + targetAngle);
 
-            StartCoroutine("turning");
-            
-
+            StartCoroutine("Turning");
         }
     }
 
-    IEnumerator turning() {
-        for (float i = rb.rotation.y; i < targetAngle/5; i++) {
-            rb.MoveRotation(Quaternion.Euler(0, i*5, 0));
-            yield return new WaitForFixedUpdate();
+    IEnumerator Turning()
+    {
+        float tempTargetAngle;
+        if (currentAngle == 0 && targetAngle == 270)
+        {
+            tempTargetAngle = -90;
         }
-        
+        else if (currentAngle == 270 && targetAngle == 0)
+        {
+            tempTargetAngle = 360;
+        }
+        else
+        {
+            tempTargetAngle = targetAngle;
+        }
+
+        float timer = 0f;                                                                           // Loop until the timer reaches the rotation duration
+        while (timer < rotationDuration)
+        {
+            timer += Time.deltaTime;                                                                // Increment the timer by the time between frames
+            float t = Mathf.SmoothStep(0f, rotationDuration, timer / rotationDuration);             // Calculate a smooth interpolation factor between 0 and 1
+            rb.MoveRotation(Quaternion.Euler(0, Mathf.Lerp(currentAngle, tempTargetAngle, t), 0));      // Rotate the rigidbody from the current angle to the target angle by the interpolation factor
+            yield return null;                                                                      // Wait for the next frame
+            rb.velocity += this.transform.forward/3;
+        }
     }
 
-
-
+    //stops the dog from being busy after the turnCooldown expires
     IEnumerator CeaseBusiness()
     {
         yield return new WaitForSeconds(turnCooldown);
@@ -180,7 +230,27 @@ public class NewCharacterController : MonoBehaviour
             isGrounded = false;
             //needs to make the dog busy as well
             animator.SetTrigger("TriggerJump");
+            StartCoroutine("RegisterJump");
         }
+    }
+
+    IEnumerator RegisterJump()
+    {
+        jumping = true;
+        yield return new WaitForEndOfFrame();
+        jumping = false;
+    }
+
+    void Tunnel()
+    {
+        StartCoroutine("RegisterTunnel");
+    }
+
+    IEnumerator RegisterTunnel()
+    {
+        tunnelling = true;
+        yield return new WaitForEndOfFrame();
+        tunnelling = false;
     }
 
     public void PlayDead()

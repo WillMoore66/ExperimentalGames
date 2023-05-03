@@ -54,7 +54,7 @@ public class HandManager : MonoBehaviour
             }
         }
 
-        Debug.Log(scrubCounter);
+        //Debug.Log(scrubCounter);
 
         if (scrubCounter > 80)
         {
@@ -73,7 +73,7 @@ public class HandManager : MonoBehaviour
 
     IEnumerator BackToMenuTimer()
     {
-        yield return new WaitForSeconds(15f);
+        yield return new WaitForSeconds(10f);
         Cursor.visible= true;
         SceneManager.LoadScene("DeclanSceneButActuallyWorks");
     }

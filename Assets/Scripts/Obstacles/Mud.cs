@@ -29,7 +29,7 @@ public class Mud : MonoBehaviour
         player.transform.GetComponent<NewCharacterController>().maxDogSpeed -= mudSlowAmount;
         yield return new WaitForSeconds(mudTime);
         playerRenderer.material = defaultMat;
-        Debug.Log("Switching material to " + defaultMat.name);
+        //Debug.Log("Switching material to " + defaultMat.name);
         player.transform.GetComponent<NewCharacterController>().maxDogSpeed += mudSlowAmount;
     }
 }
