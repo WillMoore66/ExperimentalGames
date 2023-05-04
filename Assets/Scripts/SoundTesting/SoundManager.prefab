@@ -54,6 +54,15 @@ MonoBehaviour:
   - ID: PodiumTheme
     sound: {fileID: 8300000, guid: 5e4779cbc0a402c48870054e7a2aa365, type: 3}
     volume: 0.75
+  - ID: Jump
+    sound: {fileID: 8300000, guid: 370599acbb5992140b087a650a26e07f, type: 3}
+    volume: 0.5
+  - ID: Click
+    sound: {fileID: 8300000, guid: 3b5951bd514d82b45a2cbb824cd15be0, type: 3}
+    volume: 1
+  - ID: Button Click
+    sound: {fileID: 8300000, guid: 5471c8d0e3978254789efb1aaac876b4, type: 3}
+    volume: 1
   soundCategories:
   - ID: dog
     audioSources: []
