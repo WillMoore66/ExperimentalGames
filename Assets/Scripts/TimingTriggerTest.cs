@@ -38,7 +38,7 @@ public class TimingTriggerTest : MonoBehaviour
         tooLate = GameObject.Find("TooLate");
         crowdParent = GameObject.Find("AudienceParent");
 
-        if (!tunnel)
+        if (tunnel == null)
         {
             tunnel = this.gameObject;
         }
