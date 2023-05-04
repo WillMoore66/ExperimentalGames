@@ -3,7 +3,6 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 using UnityEngine.Windows.Speech;
 
 public class MainMenu : Menu
@@ -11,6 +10,11 @@ public class MainMenu : Menu
     // Must be assigned in editor, just "hey where options/credits menus go"
     [SerializeField] private Menu optionsMenu;
     [SerializeField] private Menu creditsMenu;
+
+    // Hat menu is an anomaly (sorry)
+    [SerializeField] private GameObject hatMenu;
+
+    // Evelyn is the one who figured out how the voice recognition worked implemented it into the menus
     private Dictionary<string, Action> keywords = new Dictionary<string, Action>();
     private KeywordRecognizer keywordRecognizer;
 
@@ -35,8 +39,17 @@ public class MainMenu : Menu
 
     // Will work once project settings are edited to add scenes to build settings
     public void OnPlayButton() {
-        SceneManager.LoadScene("CallumScene");
-        Debug.Log("hi");
+        /* Old code used to switch scenes before the hat menu was added:
+            SceneManager.LoadScene("CallumScene");
+            Debug.Log("hi");
+        */
+
+        // Open hat menu. Disable others?
+        hatMenu.SetActive(true);
+
+        optionsMenu.gameObject.SetActive(false);
+        creditsMenu.gameObject.SetActive(false);
+        this.gameObject.SetActive(false);
     }
 
     public void OnOptionsButton() {

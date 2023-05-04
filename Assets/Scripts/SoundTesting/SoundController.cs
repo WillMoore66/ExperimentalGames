@@ -18,6 +18,7 @@ public class SoundController : MonoBehaviour
         // get instance of soundmanager
         try
         {
+
             soundManager = SoundManager.current;
         }
         catch (NullReferenceException)
