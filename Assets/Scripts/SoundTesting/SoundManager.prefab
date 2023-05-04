@@ -30,7 +30,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 4
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &5645727177328529287
 MonoBehaviour:
@@ -48,8 +48,12 @@ MonoBehaviour:
   - ID: HowToPlayTheme
     sound: {fileID: 8300000, guid: bfe83520c5cd4914b92a0c42cc0ba56f, type: 3}
     volume: 1
+  - ID: TrackMusic
+    sound: {fileID: 8300000, guid: 0f515bea00d8c8f43b622f3d30cb4908, type: 3}
+    volume: 1
   soundCategories:
   - ID: dog
     audioSources: []
   - ID: music
     audioSources: []
+  currentSounds: []
