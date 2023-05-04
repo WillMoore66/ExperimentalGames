@@ -22,12 +22,18 @@ public class HatSelector : MonoBehaviour
 
     public void OnHatButtonPress()
     {
+        // Audio
+        SoundManager.current.PlaySound("Button Click", true);
+
         selectedHat = buttonHatPrefab;
         Debug.Log("Hat selected: " + buttonHatPrefab.name);
     }
 
     public void OnRequestSceneChange()
     {
+        // Audio
+        SoundManager.current.PlaySound("Button Click", true);
+
         // We want to load the next scene now
         SceneManager.LoadScene(sceneIDToLoad);
         // Shouldn't 

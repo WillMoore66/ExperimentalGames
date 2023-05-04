@@ -44,6 +44,9 @@ public class MainMenu : Menu
             Debug.Log("hi");
         */
 
+        // Audio
+        SoundManager.current.PlaySound("Button Click",true);
+
         // Open hat menu. Disable others?
         hatMenu.SetActive(true);
 
@@ -53,18 +56,27 @@ public class MainMenu : Menu
     }
 
     public void OnOptionsButton() {
+        // Audio
+        SoundManager.current.PlaySound("Button Click", true);
+
         // I love putting parameters into coroutines, it's not scuffed at all!!!
         var openOptions = MoveCameraTo(optionsMenu);
         StartCoroutine(openOptions);
     }
 
     public void OnCreditsButton() {
+        // Audio
+        SoundManager.current.PlaySound("Button Click", true);
+
         // I love putting parameters into coroutines, it's not scuffed at all!!!
         var openCredits = MoveCameraTo(creditsMenu);
         StartCoroutine(openCredits);
     }
 
     public void OnExitButton() {
+        // Audio
+        SoundManager.current.PlaySound("Button Click", true);
+
         Application.Quit();
         Debug.Log("The game is closed, application.quit just doesn't do anything in playtest mode");
     }

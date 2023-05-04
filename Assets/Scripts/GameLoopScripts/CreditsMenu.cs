@@ -32,6 +32,9 @@ public class CreditsMenu : Menu
     
 
     public void OnMainButton() {
+        // Audio
+        SoundManager.current.PlaySound("Button Click", true);
+
         // I love putting parameters into coroutines, it's not scuffed at all!!!
         var openMain = MoveCameraTo(mainMenu);
         StartCoroutine(openMain);
