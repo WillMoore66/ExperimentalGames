@@ -14,6 +14,8 @@ public class HatSelector : MonoBehaviour
 
     // When a hat is selected, this is written to.
     public static GameObject selectedHat;
+    private static float hatScale =0.45f;
+
 
     [SerializeField] private string sceneIDToLoad;
     [SerializeField] private string voiceKeywordForLevel;
@@ -40,7 +42,7 @@ public class HatSelector : MonoBehaviour
             // Make a new hat and sellotape it to the dog
             GameObject newHat = Instantiate(selectedHat);
             newHat.transform.position = dog.transform.position;
-            //newHat.transform.localScale = new Vector3(dog.transform.localScale.x / newHat.transform.localScale.x, dog.transform.localScale.y / newHat.transform.localScale.y, dog.transform.localScale.z / newHat.transform.localScale.z);
+            newHat.transform.localScale *= hatScale;
             newHat.transform.eulerAngles = dog.transform.eulerAngles;
             newHat.transform.parent = dog.transform;
         }
