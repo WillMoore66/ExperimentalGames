@@ -236,20 +236,10 @@ public class NewCharacterController : MonoBehaviour
         }
     }
 
-    public void TrampolineJump()
-    {
-        Vector3 force = new Vector3(0, Mathf.SmoothStep(0, jumpHeight, 1.5f), 0);
-        rb.AddForce(force);
-
-        isGrounded = false;
-        animator.SetTrigger("TriggerJump");
-        StartCoroutine("RegisterJump");
-    }
-
     IEnumerator RegisterJump()
     {
         // Audio
-        SoundManager.current.PlaySound("Jump",this.gameObject,true);
+        //SoundManager.current.PlaySound("Jump",this.gameObject,true);
 
         jumping = true;
         yield return new WaitForEndOfFrame();
