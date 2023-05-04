@@ -223,10 +223,8 @@ public class NewCharacterController : MonoBehaviour
     {
         if (this.gameObject)
         {
-            //Debug.Log("hehehekhgsahk;gf");
             if (isGrounded && !busy)
             {
-                //Debug.Log("gjjkvajgkag");
                 Vector3 force = new Vector3(0, Mathf.SmoothStep(0, jumpHeight, 1.5f), 0);
                 rb.AddForce(force);
 
@@ -236,6 +234,16 @@ public class NewCharacterController : MonoBehaviour
                 StartCoroutine("RegisterJump");
             }
         }
+    }
+
+    public void TrampolineJump()
+    {
+        Vector3 force = new Vector3(0, Mathf.SmoothStep(0, jumpHeight, 1.5f), 0);
+        rb.AddForce(force);
+
+        isGrounded = false;
+        animator.SetTrigger("TriggerJump");
+        StartCoroutine("RegisterJump");
     }
 
     IEnumerator RegisterJump()
