@@ -79,6 +79,20 @@ public class SoundManager : MonoBehaviour {
         return currentSounds[0].clip;
     }
 
+    // For cleanup
+    private IEnumerator cleanUpSound(AudioSource source, List<AudioSource> list) {
+        yield return new WaitForSeconds(source.clip.length);
+        list.Remove(source);
+        currentSounds.Remove(source);
+        Destroy(source);
+    }
+
+    private IEnumerator cleanUpSound(AudioSource source) {
+        yield return new WaitForSeconds(source.clip.length);
+        currentSounds.Remove(source);
+        Destroy(source);
+    }
+
     // === Public functions used to play sounds ====
     // Plays a sound at the camera
     public AudioSource PlaySound(string soundID) {
@@ -105,7 +119,8 @@ public class SoundManager : MonoBehaviour {
 
         if (cleanUpSelf) {
             try {
-                Destroy(audioSourceComp.gameObject, audioSourceComp.clip.length);
+                var clean = cleanUpSound(audioSourceComp);
+                StartCoroutine(clean);
             }
             catch (NullReferenceException ex) {
                 Debug.LogError(ex.ToString());
@@ -122,8 +137,8 @@ public class SoundManager : MonoBehaviour {
 
         if (cleanUpSelf) {
             try {
-                categoryToAddTo.audioSources.Remove(audioSourceComp);
-                Destroy(audioSourceComp.gameObject, audioSourceComp.clip.length);
+                var clean = cleanUpSound(audioSourceComp, categoryToAddTo.audioSources);
+                StartCoroutine(clean);
             }
             catch (NullReferenceException ex) {
                 Debug.LogError(ex.ToString());
@@ -157,7 +172,8 @@ public class SoundManager : MonoBehaviour {
 
         if (cleanUpSelf) {
             try {
-                Destroy(audioSourceComp.gameObject, audioSourceComp.clip.length);
+                var clean = cleanUpSound(audioSourceComp);
+                StartCoroutine(clean);
             }
             catch (NullReferenceException ex) {
                 Debug.LogError(ex.ToString());
@@ -174,8 +190,8 @@ public class SoundManager : MonoBehaviour {
 
         if (cleanUpSelf) {
             try {
-                categoryToAddTo.audioSources.Remove(audioSourceComp);
-                Destroy(audioSourceComp.gameObject, audioSourceComp.clip.length);
+                var clean = cleanUpSound(audioSourceComp,categoryToAddTo.audioSources);
+                StartCoroutine(clean);
             }
             catch (NullReferenceException ex) {
                 Debug.LogError(ex.ToString());
@@ -208,7 +224,8 @@ public class SoundManager : MonoBehaviour {
 
         if (cleanUpSelf) {
             try {
-                Destroy(audioSourceComp.gameObject, audioSourceComp.clip.length);
+                var clean = cleanUpSound(audioSourceComp);
+                StartCoroutine(clean);
             }
             catch (NullReferenceException ex) {
                 Debug.LogError(ex.ToString());
@@ -225,8 +242,8 @@ public class SoundManager : MonoBehaviour {
 
         if (cleanUpSelf) {
             try {
-                categoryToAddTo.audioSources.Remove(audioSourceComp);
-                Destroy(audioSourceComp.gameObject, audioSourceComp.clip.length);
+                var clean = cleanUpSound(audioSourceComp, categoryToAddTo.audioSources);
+                StartCoroutine(clean);
             }
             catch (NullReferenceException ex) {
                 Debug.LogError(ex.ToString());
