@@ -7,7 +7,7 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: cubehat_DefaultMaterial_BaseMap
+  m_Name: FlowerHat
   m_Shader: {fileID: 4800000, guid: 6e4ae4064600d784cac1e41a9e6f2e59, type: 3}
   m_Parent: {fileID: 0}
   m_ModifiedSerializedProperties: 0
@@ -37,7 +37,7 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _BaseColorMap:
-        m_Texture: {fileID: 2800000, guid: ea12521dc1c4ffe43bb4a477423016b9, type: 3}
+        m_Texture: {fileID: 2800000, guid: b0626876d825c994b85332591b7ae987, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _BentNormalMap:
@@ -73,15 +73,15 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MainTex:
-        m_Texture: {fileID: 2800000, guid: ea12521dc1c4ffe43bb4a477423016b9, type: 3}
+        m_Texture: {fileID: 2800000, guid: b0626876d825c994b85332591b7ae987, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MaskMap:
-        m_Texture: {fileID: 2800000, guid: 6ba5d74cccef0e5468475215bf947d06, type: 3}
+        m_Texture: {fileID: 2800000, guid: b15f2b4da7480944e8728248543b685f, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _NormalMap:
-        m_Texture: {fileID: 2800000, guid: a83c643d4d12e4145a8e4bceeac0f83b, type: 3}
+        m_Texture: {fileID: 2800000, guid: 8b78618db8cf993448967ff622d9a71f, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _NormalMapOS:
