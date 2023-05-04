@@ -14,7 +14,6 @@ public class HatSelector : MonoBehaviour
 
     // When a hat is selected, this is written to.
     public static GameObject selectedHat;
-    private static float hatScale =0.45f;
 
 
     [SerializeField] private string sceneIDToLoad;
@@ -35,7 +34,7 @@ public class HatSelector : MonoBehaviour
         Debug.LogError("hi something has gone catastrophically wrong in typical unity fashion");
     }
 
-    public static void ApplyHatToDog(GameObject dog)
+    public static void ApplyHatToDog(GameObject dog, float hatScale)
     {
         try
         {

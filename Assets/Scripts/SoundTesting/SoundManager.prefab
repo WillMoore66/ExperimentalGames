@@ -51,6 +51,9 @@ MonoBehaviour:
   - ID: TrackMusic
     sound: {fileID: 8300000, guid: 0f515bea00d8c8f43b622f3d30cb4908, type: 3}
     volume: 1
+  - ID: PodiumTheme
+    sound: {fileID: 8300000, guid: 5e4779cbc0a402c48870054e7a2aa365, type: 3}
+    volume: 0.75
   soundCategories:
   - ID: dog
     audioSources: []
