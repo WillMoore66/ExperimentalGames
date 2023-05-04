@@ -27,7 +27,7 @@ public class TunnelScript : MonoBehaviour
         //spawn sphere between tunnel entrance and exit, then rotate tunnel camera around the midpoint
         sphere.transform.position = (sphere.transform.position = Vector3.Lerp(tunnelEntrance.transform.position, tunnelEnd.transform.position, 0.5f));
         
-        for (int i = 0; i < 180/speed; i++) {
+        for (float i = 0; i < 180; i+=speed) {
             yield return new WaitForFixedUpdate();
             tunnelCam.transform.RotateAround(sphere.transform.position, sphere.transform.up, speed); 
         }
@@ -39,5 +39,6 @@ public class TunnelScript : MonoBehaviour
         dog.transform.position = new Vector3(dog.transform.position.x, -0.5200009f, dog.transform.position.z);
         dog.transform.eulerAngles = new Vector3(dog.transform.eulerAngles.x, dog.transform.eulerAngles.y + 180, dog.transform.eulerAngles.z);
         dog.SetActive(true);
+        dog.GetComponent<NewCharacterController>().dogDirection = 0;
     }
 }

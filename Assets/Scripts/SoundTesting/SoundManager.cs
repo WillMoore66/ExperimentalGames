@@ -274,7 +274,7 @@ public class SoundManager : MonoBehaviour {
     public int GetCategoryIndexFromID(string categoryID) {
         foreach (SoundCategory thisCategory in soundCategories) {
             if (thisCategory.ID.Equals(categoryID)) {
-                Debug.Log("What the fu");
+                Debug.Log("log");
                 return soundCategories.IndexOf(thisCategory);
             }
         }

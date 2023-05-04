@@ -24,11 +24,10 @@ public class MainMenu : Menu
         keywords.Add("owners", OnCreditsButton);
         keywords.Add("credits", OnCreditsButton);
 
-        keywordRecognizer = new KeywordRecognizer(keywords.Keys.ToArray());
+        keywordRecognizer = new KeywordRecognizer(keywords.Keys.ToArray(), ConfidenceLevel.Low);
         keywordRecognizer.OnPhraseRecognized += OnKeywordsRecognised;
         keywordRecognizer.Start();
     }
-
     private void OnKeywordsRecognised(PhraseRecognizedEventArgs args) {
         Debug.Log("Keyword: " + args.text);
         keywords[args.text].Invoke();

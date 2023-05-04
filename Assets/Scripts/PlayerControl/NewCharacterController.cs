@@ -23,7 +23,7 @@ public class NewCharacterController : MonoBehaviour
     [SerializeField] float turnSpeed;
     [SerializeField] float numTurnSteps;
 
-    [SerializeField] int dogDirection;
+    public int dogDirection;
 
     PlayerInput playerInput;
     [SerializeField][Range(1.0f, 100.0f)] public float maxDogSpeed = 30;
@@ -66,7 +66,7 @@ public class NewCharacterController : MonoBehaviour
         keywords.Add("left", TurnLeft);
         keywords.Add("right", TurnRight);
         keywords.Add("reverse", Reverse);
-        keywords.Add("tunnel", Tunnel);
+        keywords.Add("dig", Tunnel);
         keywords.Add("play dead", PlayDead);
 
         //setup keywordRecognizer
@@ -221,17 +221,20 @@ public class NewCharacterController : MonoBehaviour
 
     void Jump()
     {
-        //Debug.Log("hehehekhgsahk;gf");
-        if (isGrounded && !busy)
+        if (this.gameObject)
         {
-            //Debug.Log("gjjkvajgkag");
-            Vector3 force = new Vector3(0, Mathf.SmoothStep(0, jumpHeight, 1.5f), 0);
-            rb.AddForce(force);
+            //Debug.Log("hehehekhgsahk;gf");
+            if (isGrounded && !busy)
+            {
+                //Debug.Log("gjjkvajgkag");
+                Vector3 force = new Vector3(0, Mathf.SmoothStep(0, jumpHeight, 1.5f), 0);
+                rb.AddForce(force);
 
-            isGrounded = false;
-            //needs to make the dog busy as well
-            animator.SetTrigger("TriggerJump");
-            StartCoroutine("RegisterJump");
+                isGrounded = false;
+                //needs to make the dog busy as well
+                animator.SetTrigger("TriggerJump");
+                StartCoroutine("RegisterJump");
+            }
         }
     }
 
@@ -244,7 +247,14 @@ public class NewCharacterController : MonoBehaviour
 
     void Tunnel()
     {
-        StartCoroutine("RegisterTunnel");
+        try
+        {
+            StartCoroutine("RegisterTunnel");
+        }
+        catch (NullReferenceException ex)
+        {
+            Debug.LogError(ex.ToString());
+        }
     }
 
     IEnumerator RegisterTunnel()

@@ -63,7 +63,11 @@ public class TimingTriggerTest : MonoBehaviour
         {
             counter++;
             ResolveLateness();
-            Debug.Log(dogLateness);
+            //Debug.Log(dogLateness);
+            if (counter > postStumbleTicks)
+            {
+                tunnel.GetComponent<TunnelScript>().speed = 0.5f;
+            }
         }
     }
 
@@ -75,7 +79,7 @@ public class TimingTriggerTest : MonoBehaviour
             {
                 //dog is early
                 dogLateness = 1;
-                tunnel.GetComponent<TunnelScript>().speed = 0.5f;
+                tunnel.GetComponent<TunnelScript>().speed = 0.1f;
             }
             else if (counter <= prePerfectTicks)
             {
@@ -87,7 +91,7 @@ public class TimingTriggerTest : MonoBehaviour
             {
                 //dog is perfect
                 dogLateness = 3;
-                tunnel.GetComponent<TunnelScript>().speed = 1.5f;
+                tunnel.GetComponent<TunnelScript>().speed = 2f;
             }
             else if (counter <= postPerfectTicks)
             {
@@ -101,11 +105,7 @@ public class TimingTriggerTest : MonoBehaviour
                 dogLateness = 4;
                 tunnel.GetComponent<TunnelScript>().speed = 0.5f;
             }
-            else
-            {
-                dogLateness = 4;
-                tunnel.GetComponent<TunnelScript>().speed = 0.5f;
-            }
+            Debug.Log(dogLateness);
         }
         PlayFeedback();
     }
