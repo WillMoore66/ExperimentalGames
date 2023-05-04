@@ -7,44 +7,53 @@ using UnityEngine;
 
 public class SoundController : MonoBehaviour
 {
+    [SerializeField]
     SoundManager soundManager;
 
     [SerializeField]
     private string managedCategory;
 
-    private void Start() {
-        UpdateSoundManager();
-    }
-
-    private void UpdateSoundManager() {
+    private void UpdateSoundManager()
+    {
         // get instance of soundmanager
-        try {
-            SoundManager soundManager = SoundManager.current;
+        try
+        {
+            soundManager = SoundManager.current;
         }
-        catch (NullReferenceException) {
+        catch (NullReferenceException)
+        {
             Debug.LogError("NullReferenceException: The sound manager is not initialized!!");
         }
     }
 
+    private void Start() {
+        UpdateSoundManager();
+    }
+
     public void SetMasterVolume(System.Single newVolume) {
         UpdateSoundManager();
-        Debug.Log("what " + newVolume);
+        foreach (AudioSource thisAudioSource in soundManager.currentSounds) { 
+            thisAudioSource.volume = (thisAudioSource.volume / SoundManager.masterVolume) * newVolume;
+        }
         SoundManager.masterVolume = newVolume;
     }
 
     public void SetCategoryVolume(System.Single newVolume) {
         UpdateSoundManager();
-        soundManager.soundCategories[soundManager.GetCategoryIndexFromID(managedCategory)].volume = newVolume;
-        foreach (AudioSource currentSource in soundManager.soundCategories[soundManager.GetCategoryIndexFromID(managedCategory)].audioSources) {
-            currentSource.volume = newVolume * SoundManager.masterVolume;
+        int categoryIndex = soundManager.GetCategoryIndexFromID(managedCategory);
+        foreach (AudioSource currentSource in soundManager.soundCategories[categoryIndex].audioSources) {
+            currentSource.volume = (currentSource.volume / soundManager.soundCategories[categoryIndex].volume) * newVolume;
         }
+        soundManager.soundCategories[categoryIndex].volume = newVolume;
     }
 
     public void SetCategoryVolume(string categoryID, float newVolume) {
         UpdateSoundManager();
-        soundManager.soundCategories[soundManager.GetCategoryIndexFromID(categoryID)].volume = newVolume;
-        foreach(AudioSource currentSource in soundManager.soundCategories[soundManager.GetCategoryIndexFromID(categoryID)].audioSources) {
-            currentSource.volume = newVolume * SoundManager.masterVolume;
+        int categoryIndex = soundManager.GetCategoryIndexFromID(managedCategory);
+        foreach (AudioSource currentSource in soundManager.soundCategories[categoryIndex].audioSources)
+        {
+            currentSource.volume = (currentSource.volume / soundManager.soundCategories[categoryIndex].volume) * newVolume;
         }
+        soundManager.soundCategories[categoryIndex].volume = newVolume;
     }
 }

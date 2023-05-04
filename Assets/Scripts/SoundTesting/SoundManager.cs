@@ -48,9 +48,11 @@ public class SoundManager : MonoBehaviour {
         if (ready) {
             Destroy(this);
         } else {
-            current = this;
+            ready = true;
+            SoundManager.current = this;
             currentSounds = new List<AudioSource>();
         }
+        DontDestroyOnLoad(this.gameObject);
     }
 
     // === Private function used below to spawn an audio source ===
@@ -68,7 +70,6 @@ public class SoundManager : MonoBehaviour {
     private AudioClip GetClipFromID(string soundID) {
         foreach (AudioClipPair pair in registeredSounds) {
             if (pair.ID.Equals(soundID)) {
-                Debug.Log("got it");
                 return pair.sound;
             }
         }
@@ -107,7 +108,7 @@ public class SoundManager : MonoBehaviour {
                 Destroy(audioSourceComp.gameObject, audioSourceComp.clip.length);
             }
             catch (NullReferenceException ex) {
-
+                Debug.LogError(ex.ToString());
             }
         }
 
@@ -125,7 +126,7 @@ public class SoundManager : MonoBehaviour {
                 Destroy(audioSourceComp.gameObject, audioSourceComp.clip.length);
             }
             catch (NullReferenceException ex) {
-
+                Debug.LogError(ex.ToString());
             }
         }
 
@@ -159,7 +160,7 @@ public class SoundManager : MonoBehaviour {
                 Destroy(audioSourceComp.gameObject, audioSourceComp.clip.length);
             }
             catch (NullReferenceException ex) {
-
+                Debug.LogError(ex.ToString());
             }
         }
 
@@ -177,7 +178,7 @@ public class SoundManager : MonoBehaviour {
                 Destroy(audioSourceComp.gameObject, audioSourceComp.clip.length);
             }
             catch (NullReferenceException ex) {
-
+                Debug.LogError(ex.ToString());
             }
         }
 
@@ -210,7 +211,7 @@ public class SoundManager : MonoBehaviour {
                 Destroy(audioSourceComp.gameObject, audioSourceComp.clip.length);
             }
             catch (NullReferenceException ex) {
-
+                Debug.LogError(ex.ToString());
             }
         }
 
@@ -228,7 +229,7 @@ public class SoundManager : MonoBehaviour {
                 Destroy(audioSourceComp.gameObject, audioSourceComp.clip.length);
             }
             catch (NullReferenceException ex) {
-
+                Debug.LogError(ex.ToString());
             }
         }
 
@@ -274,7 +275,6 @@ public class SoundManager : MonoBehaviour {
     public int GetCategoryIndexFromID(string categoryID) {
         foreach (SoundCategory thisCategory in soundCategories) {
             if (thisCategory.ID.Equals(categoryID)) {
-                Debug.Log("log");
                 return soundCategories.IndexOf(thisCategory);
             }
         }
