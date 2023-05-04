@@ -17,8 +17,12 @@ public class MainMenu : Menu
     private void Awake() {
         keywords.Add("bork", OnPlayButton);
         keywords.Add("walkies", OnExitButton);
+        keywords.Add("exit", OnExitButton);
         keywords.Add("how to bork", OnOptionsButton);
+        keywords.Add("options", OnOptionsButton);
+        keywords.Add("settings", OnOptionsButton);
         keywords.Add("owners", OnCreditsButton);
+        keywords.Add("credits", OnCreditsButton);
 
         keywordRecognizer = new KeywordRecognizer(keywords.Keys.ToArray());
         keywordRecognizer.OnPhraseRecognized += OnKeywordsRecognised;

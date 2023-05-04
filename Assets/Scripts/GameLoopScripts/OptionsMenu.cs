@@ -15,7 +15,8 @@ public class OptionsMenu : Menu
     [SerializeField] private Menu mainMenu;
 
     private void Awake() {
-        keywords.Add("return", OnMainButton);
+        keywords.Add("bad dog", OnMainButton);
+        keywords.Add("back", OnMainButton);
 
         keywordRecognizer = new KeywordRecognizer(keywords.Keys.ToArray());
         keywordRecognizer.OnPhraseRecognized += OnKeywordsRecognised;
