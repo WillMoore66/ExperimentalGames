@@ -37,6 +37,11 @@ public class TimingTriggerTest : MonoBehaviour
         tooEarly = GameObject.Find("TooEarly");
         tooLate = GameObject.Find("TooLate");
         crowdParent = GameObject.Find("AudienceParent");
+
+        if (!tunnel)
+        {
+            tunnel = this.gameObject;
+        }
     }
 
     private void OnTriggerEnter(Collider other)
@@ -58,6 +63,7 @@ public class TimingTriggerTest : MonoBehaviour
         {
             counter++;
             ResolveLateness();
+            Debug.Log(dogLateness);
         }
     }
 
@@ -139,7 +145,7 @@ public class TimingTriggerTest : MonoBehaviour
                 //rb.velocity -= dog.transform.forward * 3;
                 break;
             default:
-                Debug.Log("way too late");
+                //Debug.Log("way too late");
                 break;
         }
     }

@@ -14,16 +14,16 @@ public class NewCharacterController : MonoBehaviour
     public float speed = 10f;
     bool isGrounded = true;
 
-    float currentAngle = 0f;
+    [SerializeField] float currentAngle = 0f;
     float rotationDuration = 1f;
-    private float targetAngle;
+    private float targetAngle = 180;
 
     [SerializeField] float speedWhileTurning;
     [SerializeField] float turnCooldown;
     [SerializeField] float turnSpeed;
     [SerializeField] float numTurnSteps;
 
-    int dogDirection;
+    [SerializeField] int dogDirection;
 
     PlayerInput playerInput;
     [SerializeField][Range(1.0f, 100.0f)] public float maxDogSpeed = 30;
@@ -111,7 +111,6 @@ public class NewCharacterController : MonoBehaviour
                 PlayDead();
             }
         }
-        Debug.Log("keywords recognized: " + keywordRecognizer.IsRunning);
     }
 
     void GoForward()
@@ -222,8 +221,10 @@ public class NewCharacterController : MonoBehaviour
 
     void Jump()
     {
+        //Debug.Log("hehehekhgsahk;gf");
         if (isGrounded && !busy)
         {
+            //Debug.Log("gjjkvajgkag");
             Vector3 force = new Vector3(0, Mathf.SmoothStep(0, jumpHeight, 1.5f), 0);
             rb.AddForce(force);
 

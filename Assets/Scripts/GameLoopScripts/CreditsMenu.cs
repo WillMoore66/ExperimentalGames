@@ -16,8 +16,8 @@ public class CreditsMenu : Menu
     [SerializeField] private Menu mainMenu;
 
     private void Awake() {
-        keywords.Add("bad dog", OnMainButton);
-        keywords.Add("back", OnMainButton);
+        //keywords.Add("bad dog", OnMainButton);
+        keywords.Add("nico nico nii", OnMainButton);
 
         keywordRecognizer = new KeywordRecognizer(keywords.Keys.ToArray());
         keywordRecognizer.OnPhraseRecognized += OnKeywordsRecognised;
