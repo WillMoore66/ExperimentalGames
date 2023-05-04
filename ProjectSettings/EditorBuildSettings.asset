@@ -8,9 +8,9 @@ EditorBuildSettings:
   - enabled: 0
     path: 
     guid: 00000000000000000000000000000000
-  - enabled: 1
-    path: Assets/Scenes/DeclanSceneButActuallyWorks.unity
-    guid: d1a8cd8a6b0485146a2be89bd70fd03e
+  - enabled: 0
+    path: 
+    guid: 00000000000000000000000000000000
   - enabled: 1
     path: Assets/Scenes/CallumScene.unity
     guid: cbb67edc0c09afd46a958770ecc9c168
