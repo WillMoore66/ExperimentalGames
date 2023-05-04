@@ -19,10 +19,10 @@ public class MainMenu : Menu
     private KeywordRecognizer keywordRecognizer;
 
     private void Awake() {
-        keywords.Add("bork", OnPlayButton);
+        keywords.Add("play", OnPlayButton);
         keywords.Add("walkies", OnExitButton);
         keywords.Add("exit", OnExitButton);
-        keywords.Add("how to bork", OnOptionsButton);
+        keywords.Add("how to play", OnOptionsButton);
         keywords.Add("options", OnOptionsButton);
         keywords.Add("settings", OnOptionsButton);
         keywords.Add("owners", OnCreditsButton);
