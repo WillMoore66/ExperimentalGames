@@ -11505,8 +11505,8 @@ MonoBehaviour:
   - {fileID: 1615388688}
   - {fileID: 343273526}
   - {fileID: 1616991733}
-  silverTime: 60
-  goldTime: 40
+  silverTime: 85
+  goldTime: 65
 --- !u!4 &1716679571
 Transform:
   m_ObjectHideFlags: 0

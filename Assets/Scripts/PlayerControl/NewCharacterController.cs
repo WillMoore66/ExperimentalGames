@@ -279,6 +279,8 @@ public class NewCharacterController : MonoBehaviour
     //this is pretty unsafe as it will allow the player to jump on anything even if they are not below the player
     void OnCollisionEnter(Collision collision)
     {
+        Debug.Log(collision.gameObject.name);
+
         if (collision.gameObject.tag == "floor")
         {
             isGrounded = true;

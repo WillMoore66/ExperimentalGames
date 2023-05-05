@@ -1,3 +1,0 @@
-0 - 60 Run Animation
-66 - 160 Walk animation
-170 - 230 Jump animation

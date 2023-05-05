@@ -141,7 +141,8 @@ PlayerSettings:
     16:9: 1
     Others: 1
   bundleVersion: 0.1.0
-  preloadedAssets: []
+  preloadedAssets:
+  - {fileID: 11400000, guid: 35d43376eaa39b245ba66c48a8934b1a, type: 2}
   metroInputSource: 0
   wsaTransparentSwapchain: 0
   m_HolographicPauseOnTrackingLoss: 1
@@ -883,11 +884,11 @@ PlayerSettings:
   m_MobileRenderingPath: 1
   metroPackageName: com.unity.template-starter-kit
   metroPackageVersion: 1.0.0.0
-  metroCertificatePath: 
+  metroCertificatePath: Assets/WSATestCertificate.pfx
   metroCertificatePassword: 
-  metroCertificateSubject: 
-  metroCertificateIssuer: 
-  metroCertificateNotAfter: 0000000000000000
+  metroCertificateSubject: DefaultCompany
+  metroCertificateIssuer: DefaultCompany
+  metroCertificateNotAfter: 0055b2ece69dda01
   metroApplicationDescription: com.unity.template-starter-kit
   wsaImages: {}
   metroTileShortName: ExperimentalGameHDRP

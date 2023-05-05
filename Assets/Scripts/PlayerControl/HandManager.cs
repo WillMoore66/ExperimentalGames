@@ -23,6 +23,7 @@ public class HandManager : MonoBehaviour
         cam = Camera.main;
         followingMouse = true;
         Cursor.visible = false;
+        StartCoroutine("BackToMenuTimer");
     }
 
     // Update is called once per frame
@@ -61,7 +62,6 @@ public class HandManager : MonoBehaviour
             //play dog happy animation
             Debug.Log("the dog is very happy!");
             dog.transform.Rotate(10, 5, 2);
-            StartCoroutine("BackToMenuTimer");
         }
         else
         {
