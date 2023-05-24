@@ -14,7 +14,7 @@ public class NewCharacterController : MonoBehaviour
     public float speed = 10f;
     bool isGrounded = true;
 
-    [SerializeField] float currentAngle = 0f;
+    public float currentAngle = 0f;
     float rotationDuration = 1f;
     private float targetAngle = 180;
 
@@ -204,10 +204,10 @@ public class NewCharacterController : MonoBehaviour
         float timer = 0f;                                                                           // Loop until the timer reaches the rotation duration
         while (timer < rotationDuration)
         {
-            timer += Time.deltaTime;                                                                // Increment the timer by the time between frames
-            float t = Mathf.SmoothStep(0f, rotationDuration, timer / rotationDuration);             // Calculate a smooth interpolation factor between 0 and 1
-            rb.MoveRotation(Quaternion.Euler(0, Mathf.Lerp(currentAngle, tempTargetAngle, t), 0));      // Rotate the rigidbody from the current angle to the target angle by the interpolation factor
-            yield return null;                                                                      // Wait for the next frame
+            timer += Time.deltaTime;                                                                //increment the timer by the time inbetween frames
+            float t = Mathf.SmoothStep(0f, rotationDuration, timer / rotationDuration);             //calculate a smooth interpolation factor between 0 and 1
+            rb.MoveRotation(Quaternion.Euler(0, Mathf.Lerp(currentAngle, tempTargetAngle, t), 0));      //rotate the rigidbody from the current angle to the target angle by the interpolation factor
+            yield return null;                                                                      //wait for the next frame
             rb.velocity += this.transform.forward/3;
         }
     }

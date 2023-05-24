@@ -40,5 +40,6 @@ public class TunnelScript : MonoBehaviour
         dog.transform.eulerAngles = new Vector3(dog.transform.eulerAngles.x, dog.transform.eulerAngles.y + 180, dog.transform.eulerAngles.z);
         dog.SetActive(true);
         dog.GetComponent<NewCharacterController>().dogDirection = 0;
+        dog.GetComponent<NewCharacterController>().currentAngle = dog.GetComponent<NewCharacterController>().dogDirection * 90;
     }
 }
