@@ -37,9 +37,10 @@ public class TunnelScript : MonoBehaviour
         mainCam.enabled = true;
         dog.transform.position = tunnelEnd.transform.position;
         dog.transform.position = new Vector3(dog.transform.position.x, -0.5200009f, dog.transform.position.z);
-        dog.transform.eulerAngles = new Vector3(dog.transform.eulerAngles.x, dog.transform.eulerAngles.y + 180, dog.transform.eulerAngles.z);
         dog.SetActive(true);
+        dog.transform.eulerAngles = new Vector3(0, 0, 0);
+        //dog.GetComponent<Rigidbody>().MoveRotation(Quaternion.Euler(0, 180, 0));
         dog.GetComponent<NewCharacterController>().dogDirection = 0;
-        dog.GetComponent<NewCharacterController>().currentAngle = dog.GetComponent<NewCharacterController>().dogDirection * 90;
+        dog.GetComponent<NewCharacterController>().currentAngle = 90;
     }
 }

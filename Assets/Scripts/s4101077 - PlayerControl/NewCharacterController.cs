@@ -187,7 +187,7 @@ public class NewCharacterController : MonoBehaviour
 
     IEnumerator Turning()
     {
-        float tempTargetAngle;
+        float tempTargetAngle = 0;
         if (currentAngle == 0 && targetAngle == 270)
         {
             tempTargetAngle = -90;
