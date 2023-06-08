@@ -14170,7 +14170,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1616991733}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 1.82, y: -1.655, z: 2.853}
+  m_LocalPosition: {x: 1.82, y: -1.384, z: 2.853}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -14307,8 +14307,8 @@ MonoBehaviour:
   - {fileID: 1683303644}
   podiumPositions:
   - {fileID: 1615388688}
-  - {fileID: 343273526}
   - {fileID: 1616991733}
+  - {fileID: 343273526}
   silverTime: 85
   goldTime: 65
 --- !u!4 &1716679571
