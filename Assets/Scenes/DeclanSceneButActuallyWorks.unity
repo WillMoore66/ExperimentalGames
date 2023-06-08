@@ -413,27 +413,27 @@ MonoBehaviour:
 
     Turn Right = "Right"
 
-    Gain tunnel speed
-    boost = "Dig" (When near the tunnel entrance)
+    Bark = "Speak"
 
-    Play Game = "Bork"
 
-    How
-    To Play = "How To Bork"
+    Play
+    Game = "Bork"
+
+    How To Play = "How To Bork"
 
     Credits = "Owners"
 
-    Back = "Bad Dog"
+    Back
+    = "Bad Dog"
 
-    Quit
-    Game = "Walkies"
+    Quit Game = "Walkies"
 
-    Note: Selecting a level requires using the mouse.
+    Note: Selecting a level requires
+    using the mouse.
 
 
-    Your
-    goal is to finish each dog race as fast as possible. If you''re too slow, you
-    won''t get first place on the podium!'
+    Your goal is to finish each dog race as fast as possible.
+    If you''re too slow, you won''t get first place on the podium!'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 0f74d85f7aff54946bcfa24193acfc77, type: 2}
   m_sharedMaterial: {fileID: 8537414637437898399, guid: 0f74d85f7aff54946bcfa24193acfc77,
@@ -7616,8 +7616,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: 'Lead Designer and Producer: Dylan Davies
 
-    Co-Lead Programmers: Evelyn
-    Moore, Declan Scott, Callum Holliman
+    Programmers: Evelyn Moore,
+    Declan Scott, Callum Holliman
 
     3D Artists: Josh Price and Dylan Davies
 

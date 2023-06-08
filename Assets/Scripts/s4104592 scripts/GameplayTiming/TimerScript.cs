@@ -16,12 +16,11 @@ public class TimerScript : MonoBehaviour
 
     private void Update()
     {
-        if (SceneManager.GetActiveScene().name == "DeclanSceneButActuallyWorks")
-        {
+        if (SceneManager.GetActiveScene().name == "DeclanSceneButActuallyWorks") {
             Destroy(gameObject);
+        } else if (SceneManager.GetActiveScene().name != "DogPettingTestScene") {
+            timer += Time.deltaTime;
+            timerText.GetComponent<TextMeshProUGUI>().text = timer.ToString("#.00");
         }
-
-        timer += Time.deltaTime;
-        timerText.GetComponent<TextMeshProUGUI>().text = timer.ToString("#.00");
     }
 }

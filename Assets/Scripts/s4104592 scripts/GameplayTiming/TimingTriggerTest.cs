@@ -27,7 +27,6 @@ public class TimingTriggerTest : MonoBehaviour
 
     NewCharacterController playerController;
     GameObject crowdParent;
-    Rigidbody rb;
 
     //Gameobject.Find is unsafe and slow and shouldnt be used
     private void Awake()
@@ -54,7 +53,6 @@ public class TimingTriggerTest : MonoBehaviour
             playerController = other.GetComponent<NewCharacterController>();
         }
         dog = other.gameObject;
-        rb = dog.GetComponent<Rigidbody>();
     }
 
     void FixedUpdate()
@@ -66,7 +64,7 @@ public class TimingTriggerTest : MonoBehaviour
             //Debug.Log(dogLateness);
             if (counter > postStumbleTicks)
             {
-                tunnel.GetComponent<TunnelScript>().speed = 0.5f;
+                tunnel.GetComponent<TunnelScript>().speed = 1f;
             }
         }
     }
@@ -79,7 +77,7 @@ public class TimingTriggerTest : MonoBehaviour
             {
                 //dog is early
                 dogLateness = 1;
-                tunnel.GetComponent<TunnelScript>().speed = 0.1f;
+                tunnel.GetComponent<TunnelScript>().speed = 0.5f;
             }
             else if (counter <= prePerfectTicks)
             {
@@ -103,7 +101,7 @@ public class TimingTriggerTest : MonoBehaviour
             {
                 //dog is late
                 dogLateness = 4;
-                tunnel.GetComponent<TunnelScript>().speed = 0.5f;
+                tunnel.GetComponent<TunnelScript>().speed = 1f;
             }
             Debug.Log(dogLateness);
         }

@@ -23,7 +23,12 @@ public class NewCharacterController : MonoBehaviour
     [SerializeField] float turnSpeed;
     [SerializeField] float numTurnSteps;
 
-    public int dogDirection;
+	[SerializeField] Vector3 startScale = Vector3.zero;
+	[SerializeField] Vector3 endScale = new Vector3(5, 4, 5);
+	[SerializeField] float duration = 1f;
+	[SerializeField] GameObject tunnel;
+
+	public int dogDirection;
 
     PlayerInput playerInput;
     [SerializeField][Range(1.0f, 100.0f)] public float maxDogSpeed = 30;
@@ -37,6 +42,10 @@ public class NewCharacterController : MonoBehaviour
     InputAction turnAction;
     InputAction playDeadAction;
 
+    AudioSource woof;
+	AudioSource applause;
+	int dogLateness;
+
     [SerializeField] bool constantForward;
     bool busy;
     Rigidbody rb;
@@ -46,10 +55,18 @@ public class NewCharacterController : MonoBehaviour
     public bool jumping = false;
     public bool tunnelling = false;
 
-    private void Awake()
+	GameObject perfect;
+	GameObject notBad;
+	GameObject tooEarly;
+	GameObject tooLate;
+    GameObject crowdParent;
+
+	private void Awake()
     {
-        //setup actions
-        playerInput = GetComponent<PlayerInput>();
+        woof = GetComponents<AudioSource>()[0];
+		applause = GetComponents<AudioSource>()[1];
+		//setup actions
+		playerInput = GetComponent<PlayerInput>();
         forwardAction = playerInput.actions["WS"];
         forwardAction.Enable();
         jumpAction = playerInput.actions["Jump"];
@@ -68,19 +85,32 @@ public class NewCharacterController : MonoBehaviour
         keywords.Add("reverse", Reverse);
         keywords.Add("dig", Tunnel);
         keywords.Add("play dead", PlayDead);
+        keywords.Add("speak", Speak);
 
-        //setup keywordRecognizer
-        keywordRecognizer = new KeywordRecognizer(keywords.Keys.ToArray(), ConfidenceLevel.Low);
+		perfect = GameObject.Find("Perfect");
+		notBad = GameObject.Find("NotBad");
+		tooEarly = GameObject.Find("TooEarly");
+		tooLate = GameObject.Find("TooLate");
+		crowdParent = GameObject.Find("AudienceParent");
+
+		//setup keywordRecognizer
+		keywordRecognizer = new KeywordRecognizer(keywords.Keys.ToArray(), ConfidenceLevel.Low);
         keywordRecognizer.OnPhraseRecognized += OnKeywordsRecognised;
         keywordRecognizer.Start();
 
         rb = this.GetComponent<Rigidbody>();
     }
 
+    void Speak() {
+        woof.Play();
+    }
+
     void FixedUpdate()
     {
         if (!busy)
         {
+            //this.transform.localRotation = Quaternion.Euler(0, this.transform.rotation.y, 0);
+
             if (constantForward)
             {
                 GoForward();
@@ -120,7 +150,7 @@ public class NewCharacterController : MonoBehaviour
 
         float time = animator.GetCurrentAnimatorStateInfo(0).normalizedTime * 450;
 
-		Debug.Log(time);
+		//Debug.Log(time);
 
         if (isGrounded) {
             if (rb.velocity.magnitude < 10 && time > 100 || rb.velocity.magnitude < 10 && time < 75) {
@@ -264,13 +294,155 @@ public class NewCharacterController : MonoBehaviour
     }
 
     void ShowFeedback() {
-		//when the player jumps
-		//get the hurdles that are within 15 either side of the dogs x position
-		//of those hurdles, get the ones that closer to a point in front of the dog than they are to the dog
-		//of those hurdles, get the closest one in the z direction
-		//congrats! you now have the hurdle that you will need to jump over next!
-		//record the absolute z distance from this hurdle
-		//based on this distance, show a specific feedback sprite and move the audience up and down a bit
+        //when the player jumps
+        //get the hurdles that are within 15 either side of the dogs x position
+        List<GameObject> obstacles = new List<GameObject>();
+		List<GameObject> obstaclesInFront = new List<GameObject>();
+        GameObject closestObstacle = this.gameObject;
+
+		obstacles = GameObject.FindGameObjectsWithTag("obstacle").ToList();
+        foreach (GameObject obstacle in obstacles) {
+            if (Vector3.Distance(obstacle.transform.position, this.transform.position) > Vector3.Distance(obstacle.transform.position, this.transform.position += this.transform.forward)) {
+                obstaclesInFront.Add(obstacle);
+            }
+        }
+        //of those hurdles, get the ones that closer to a point in front of the dog than they are to the dog
+        //of those hurdles, get the closest one in the z direction
+        float smallestZDist = 1000000;
+        foreach (GameObject obstacle in obstaclesInFront) {
+            float zDist = Mathf.Abs(this.transform.position.z - obstacle.transform.position.z);
+            if (zDist < smallestZDist) {
+                smallestZDist = zDist;
+                closestObstacle = obstacle;
+			}
+        }
+        Debug.Log(closestObstacle.name + " is " + smallestZDist + " metres away");
+        //congrats! you now have the hurdle that you will need to jump over next!
+        //record the absolute z distance from this hurdle
+        //based on this distance, show a specific feedback sprite and move the audience up and down a bit
+
+        if (smallestZDist > 20) {
+            dogLateness = 1;
+        } else if (smallestZDist > 15) {
+            dogLateness = 2;
+        } else if (smallestZDist > 10) {
+            dogLateness = 3;
+        }
+        else if (smallestZDist > 5) {
+            dogLateness = 2;
+        }
+        else if (smallestZDist < 5) {
+            dogLateness = 4;
+        }
+
+        PlayFeedback();
+		//30 meters - too early!
+		//20 meters - great!
+		//15 meters - perfect!
+		//10 meters - great!
+		//5 meters - too late!
+	}
+
+	void PlayFeedback() {
+        applause.Play();
+
+		switch (dogLateness) {
+			case 1:
+				Debug.Log("stumble before");
+				StartCoroutine("LerpScale", tooEarly);
+				//rb.velocity -= dog.transform.forward * 3;
+				break;
+			case 2:
+				Debug.Log("Okay!");
+				StartCoroutine("LerpScale", notBad);
+				StartCoroutine("MoveCrowd", 0);
+				break;
+			case 3:
+				Debug.Log("perfect");
+				StartCoroutine("LerpScale", perfect);
+				StartCoroutine("MoveCrowd", 0);
+				//rb.velocity += dog.transform.forward * 3;
+				break;
+			case 4:
+				Debug.Log("stumble after");
+				StartCoroutine("LerpScale", tooLate);
+				//rb.velocity -= dog.transform.forward * 3;
+				break;
+			default:
+				//Debug.Log("way too late");
+				break;
+		}
+	}
+
+    IEnumerator MoveCrowd(int previousRepeats) {
+		float timer = 0f;
+        float durator = duration / 10;
+        float crowdJumpHeight = 0.7f;
+		while (timer < durator) {
+			timer += Time.deltaTime;
+			float fraction = timer / durator;
+			fraction = Mathf.Clamp01(fraction);
+
+			crowdParent.transform.position = new Vector3(crowdParent.transform.position.x,Mathf.SmoothStep(crowdParent.transform.position.y, crowdParent.transform.position.y + crowdJumpHeight, fraction), crowdParent.transform.position.z);
+
+			yield return null;
+		}
+		float timer2 = 0f;
+		while (timer2 < durator) {
+			timer2 += Time.deltaTime;
+			float fraction = timer2 / durator;
+			fraction = Mathf.Clamp01(fraction);
+
+			crowdParent.transform.position = new Vector3(crowdParent.transform.position.x, Mathf.SmoothStep(crowdParent.transform.position.y, crowdParent.transform.position.y - crowdJumpHeight, fraction), crowdParent.transform.position.z);
+
+			yield return null;
+		}
+		previousRepeats++;
+		if (previousRepeats < 3) {
+            StartCoroutine("MoveCrowd", previousRepeats);
+        } else {
+            previousRepeats = 0;
+        }
+	}
+
+	IEnumerator LerpScale(GameObject p) {
+		float timer = 0f;
+		while (timer < duration) {
+			timer += Time.deltaTime;
+			float fraction = timer / duration;
+			fraction = Mathf.Clamp01(fraction);
+
+			// Use Mathf.SmoothStep to interpolate each component of the scale vector
+			float x = Mathf.SmoothStep(startScale.x, endScale.x, fraction);
+			float y = Mathf.SmoothStep(startScale.y, endScale.y, fraction);
+			float z = Mathf.SmoothStep(startScale.z, endScale.z, fraction);
+
+			// Set the scale of the gameobject to the interpolated vector
+			p.transform.localScale = new Vector3(x, y, z);
+			yield return null;
+		}
+		p.transform.localScale = endScale;
+		StartCoroutine("AntiLerpScale", p);
+	}
+
+	//this should just be done with LerpScale instead of doing all this duplication
+	IEnumerator AntiLerpScale(GameObject p) {
+		float timer = 0f;
+		while (timer < duration) {
+			timer += Time.deltaTime * 2;
+			float fraction = timer / duration;
+			fraction = Mathf.Clamp01(fraction);
+
+			// Use Mathf.SmoothStep to interpolate each component of the scale vector
+			float x = Mathf.SmoothStep(p.transform.localScale.x, 0, fraction);
+			float y = Mathf.SmoothStep(p.transform.localScale.y, 0, fraction);
+			float z = Mathf.SmoothStep(p.transform.localScale.z, 0, fraction);
+
+			// Set the scale of the gameobject to the interpolated vector
+			p.transform.localScale = new Vector3(x, y, z);
+			yield return null;
+		}
+		p.transform.localScale = Vector3.zero;
 	}
 
 	void Tunnel()
