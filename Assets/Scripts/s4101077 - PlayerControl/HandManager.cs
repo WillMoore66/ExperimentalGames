@@ -17,9 +17,13 @@ public class HandManager : MonoBehaviour
     private int scrubCounter;
     private Vector3 oldHandPos;
 
+    bool dogHappy;
+    Animator animator;
+
 
     private void Start()
     {
+        animator = dog.GetComponent<Animator>();
         cam = Camera.main;
         followingMouse = true;
         Cursor.visible = false;
@@ -61,12 +65,23 @@ public class HandManager : MonoBehaviour
         {
             //play dog happy animation
             Debug.Log("the dog is very happy!");
-            dog.transform.Rotate(10, 5, 2);
+            //dog.transform.Rotate(10, 5, 2);
+            dogHappy = true;
         }
         else
         {
         dog.transform.rotation = Quaternion.Euler(-15, -180, 0);
         }
+
+		float time = animator.GetCurrentAnimatorStateInfo(0).normalizedTime * 450;
+
+        if (dogHappy) {
+            if (time > 225 || time < 205) {
+                animator.Play("Dog.DogAnimations", 0, 205f / 450f);
+            }
+        } else if (time < 370 || time > 393) {
+				animator.Play("Dog.DogAnimations", 0, 370f / 450f);
+		}
 
         oldHandPos = hand.transform.position;
     }
