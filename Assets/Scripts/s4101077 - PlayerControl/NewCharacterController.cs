@@ -97,11 +97,9 @@ public class NewCharacterController : MonoBehaviour
             else if (turnAction.ReadValue<float>() != 0)
             {
                 if (turnAction.ReadValue<float>() == 1) {
-                    //targetAngle = rb.transform.rotation.eulerAngles.y + 90;
                     Turn(false);
                 }
                 else if (turnAction.ReadValue<float>() == -1) {
-                    //targetAngle = rb.transform.rotation.eulerAngles.y - 90;
                     Turn(true);
                 }
             }
@@ -119,6 +117,18 @@ public class NewCharacterController : MonoBehaviour
         {
             rb.velocity = new Vector3(rb.velocity.x, rb.velocity.y, rb.velocity.z) + this.transform.forward;
         }
+
+        float time = animator.GetCurrentAnimatorStateInfo(0).normalizedTime * 450;
+
+		Debug.Log(time);
+
+        if (isGrounded) {
+            if (rb.velocity.magnitude < 10 && time > 110 || rb.velocity.magnitude < 10 && time < 70) {
+                animator.Play("Dog.DogAnimations", 0, 70f / 450f);
+            } else if (rb.velocity.magnitude > 10 && time > 55 || rb.velocity.magnitude > 10 && time < 5) {
+                animator.Play("Dog.DogAnimations", 0, 5f / 450f);
+            }
+        }
     }
 
     void Reverse()
@@ -127,6 +137,10 @@ public class NewCharacterController : MonoBehaviour
         {
             rb.velocity = this.transform.forward*-reverseVelocity;
         }
+        if (rb.velocity.magnitude < 0) {
+			animator.Play("Dog.DogAnimations", 0, 110f / 450f);
+            animator.speed = -1;
+		}
         StartCoroutine("ReverseRoutine");
     }
 
@@ -135,9 +149,10 @@ public class NewCharacterController : MonoBehaviour
         constantForward = false;
         yield return new WaitForSeconds(reverseTime);
         constantForward = true;
+        animator.speed = 1;
     }
 
-    //tiny functions should be unecessary but are required for voice commands
+    //tiny functions should be unnecessary but are required for voice commands
     void TurnLeft()
     {
         Turn(true);
@@ -229,24 +244,36 @@ public class NewCharacterController : MonoBehaviour
                 rb.AddForce(force);
 
                 isGrounded = false;
-                //needs to make the dog busy as well
-                animator.SetTrigger("TriggerJump");
-                StartCoroutine("RegisterJump");
+
+				animator.Play("Dog.DogAnimations", 0, 282f / 450f); //282 is the first jump frame
+
+				StartCoroutine("RegisterJump");
             }
         }
     }
 
     IEnumerator RegisterJump()
     {
-        // Audio
+        //Audio
         //SoundManager.current.PlaySound("Jump",this.gameObject,true);
 
         jumping = true;
+        ShowFeedback();
         yield return new WaitForEndOfFrame();
         jumping = false;
     }
 
-    void Tunnel()
+    void ShowFeedback() {
+		//when the player jumps
+		//get the hurdles that are within 15 either side of the dogs x position
+		//of those hurdles, get the ones that closer to a point in front of the dog than they are to the dog
+		//of those hurdles, get the closest one in the z direction
+		//congrats! you now have the hurdle that you will need to jump over next!
+		//record the absolute z distance from this hurdle
+		//based on this distance, show a specific feedback sprite and move the audience up and down a bit
+	}
+
+	void Tunnel()
     {
         try
         {
@@ -279,7 +306,7 @@ public class NewCharacterController : MonoBehaviour
     //this is pretty unsafe as it will allow the player to jump on anything even if they are not below the player
     void OnCollisionEnter(Collision collision)
     {
-        Debug.Log(collision.gameObject.name);
+        //Debug.Log(collision.gameObject.name);
 
         if (collision.gameObject.tag == "floor")
         {
