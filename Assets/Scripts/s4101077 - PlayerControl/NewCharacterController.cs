@@ -123,10 +123,10 @@ public class NewCharacterController : MonoBehaviour
 		Debug.Log(time);
 
         if (isGrounded) {
-            if (rb.velocity.magnitude < 10 && time > 110 || rb.velocity.magnitude < 10 && time < 70) {
-                animator.Play("Dog.DogAnimations", 0, 70f / 450f);
-            } else if (rb.velocity.magnitude > 10 && time > 55 || rb.velocity.magnitude > 10 && time < 5) {
-                animator.Play("Dog.DogAnimations", 0, 5f / 450f);
+            if (rb.velocity.magnitude < 10 && time > 100 || rb.velocity.magnitude < 10 && time < 75) {
+                animator.Play("Dog.DogAnimations", 0, 75f / 450f);
+            } else if (rb.velocity.magnitude > 10 && time > 50 || rb.velocity.magnitude > 10 && time < 10) {
+                animator.Play("Dog.DogAnimations", 0, 10f / 450f);
             }
         }
     }
@@ -245,7 +245,7 @@ public class NewCharacterController : MonoBehaviour
 
                 isGrounded = false;
 
-				animator.Play("Dog.DogAnimations", 0, 282f / 450f); //282 is the first jump frame
+				animator.Play("Dog.DogAnimations", 0, 280f / 450f); //282 is the first jump frame
 
 				StartCoroutine("RegisterJump");
             }
